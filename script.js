@@ -77,6 +77,58 @@ if (slidesTrack && dotsWrap && prevBtn && nextBtn) {
 }
 
 let productData = window.PRODUCT_CATALOG || {};
+const ADMIN_OVERRIDES_KEY = "riya_admin_overrides_v1";
+
+function getDefaultOverrides() {
+  return {};
+}
+
+function loadAdminOverrides() {
+  try {
+    const raw = window.localStorage.getItem(ADMIN_OVERRIDES_KEY);
+    if (!raw) return getDefaultOverrides();
+    const parsed = JSON.parse(raw);
+    return parsed && typeof parsed === "object" ? parsed : getDefaultOverrides();
+  } catch {
+    return getDefaultOverrides();
+  }
+}
+
+function saveAdminOverrides(overrides) {
+  window.localStorage.setItem(ADMIN_OVERRIDES_KEY, JSON.stringify(overrides));
+}
+
+function getItemById(id) {
+  const [category, idx] = String(id).split("-");
+  const index = Number(idx) - 1;
+  if (!category || Number.isNaN(index) || index < 0) return null;
+  const items = productData[category];
+  if (!Array.isArray(items) || !items[index]) return null;
+  return { item: items[index], category, index };
+}
+
+function ensureBasePrice() {
+  Object.values(productData).forEach((items) => {
+    if (!Array.isArray(items)) return;
+    items.forEach((item) => {
+      if (!item.basePrice) item.basePrice = item.price;
+      if (typeof item.offer !== "string") item.offer = "";
+      if (typeof item.unavailable !== "boolean") item.unavailable = Boolean(item.unavailable);
+    });
+  });
+}
+
+function applyAdminOverrides() {
+  const overrides = loadAdminOverrides();
+  Object.entries(overrides).forEach(([id, patch]) => {
+    const found = getItemById(id);
+    if (!found) return;
+    const { item } = found;
+    if (typeof patch.price === "string" && patch.price.trim()) item.price = patch.price.trim();
+    if (typeof patch.offer === "string") item.offer = patch.offer.trim();
+    if (typeof patch.unavailable === "boolean") item.unavailable = patch.unavailable;
+  });
+}
 
 function extractPrice(text) {
   const match = (text || "").replace(/,/g, "").match(/\d+/g);
@@ -134,6 +186,8 @@ function renderProducts() {
   });
 }
 
+ensureBasePrice();
+applyAdminOverrides();
 renderProducts();
 
 async function loadServerCatalog() {
@@ -143,8 +197,11 @@ async function loadServerCatalog() {
     const data = await response.json();
     if (!data || typeof data !== "object") return;
     productData = data;
+    ensureBasePrice();
+    applyAdminOverrides();
     renderProducts();
     window.__refreshProductFilters?.();
+    window.__refreshAdminPanel?.();
   } catch {
     // fallback to bundled catalog
   }
@@ -303,4 +360,163 @@ if (filterPills && searchInput && showcaseSections.length > 0) {
 
   refreshCardMetadata();
   applyFilters();
+}
+
+const openAdminPanelBtn = document.getElementById("openAdminPanel");
+const closeAdminPanelBtn = document.getElementById("closeAdminPanel");
+const adminPanel = document.getElementById("adminPanel");
+const adminSearchInput = document.getElementById("adminSearchInput");
+const adminProductSelect = document.getElementById("adminProductSelect");
+const adminPriceInput = document.getElementById("adminPriceInput");
+const adminOfferInput = document.getElementById("adminOfferInput");
+const adminUnavailableInput = document.getElementById("adminUnavailableInput");
+const saveAdminChangesBtn = document.getElementById("saveAdminChanges");
+const resetAdminChangesBtn = document.getElementById("resetAdminChanges");
+const adminStatusNote = document.getElementById("adminStatusNote");
+
+if (
+  openAdminPanelBtn &&
+  closeAdminPanelBtn &&
+  adminPanel &&
+  adminSearchInput &&
+  adminProductSelect &&
+  adminPriceInput &&
+  adminOfferInput &&
+  adminUnavailableInput &&
+  saveAdminChangesBtn &&
+  resetAdminChangesBtn &&
+  adminStatusNote
+) {
+  let currentList = [];
+
+  function getFlatProducts() {
+    return Object.entries(productData).flatMap(([category, items]) =>
+      (items || []).map((item, index) => ({
+        id: `${category}-${index + 1}`,
+        category,
+        name: item.name || "Untitled",
+        brand: item.brand || "",
+        price: item.price || "",
+        basePrice: item.basePrice || item.price || "",
+        offer: item.offer || "",
+        unavailable: Boolean(item.unavailable)
+      }))
+    );
+  }
+
+  function setAdminStatus(text) {
+    adminStatusNote.textContent = text;
+  }
+
+  function toggleAdminPanel(show) {
+    adminPanel.classList.toggle("open", show);
+    adminPanel.setAttribute("aria-hidden", String(!show));
+  }
+
+  function renderAdminOptions() {
+    const q = adminSearchInput.value.toLowerCase().trim();
+    currentList = getFlatProducts().filter((item) =>
+      q === "" || `${item.name} ${item.brand} ${item.category}`.toLowerCase().includes(q)
+    );
+
+    adminProductSelect.innerHTML = currentList.length
+      ? currentList.map((item) => `<option value="${item.id}">${item.name} (${item.category})</option>`).join("")
+      : '<option value="">No product found</option>';
+  }
+
+  function fillAdminForm() {
+    const selectedId = adminProductSelect.value;
+    if (!selectedId) return;
+    const item = getFlatProducts().find((p) => p.id === selectedId);
+    if (!item) return;
+    adminPriceInput.value = item.price;
+    adminOfferInput.value = item.offer;
+    adminUnavailableInput.checked = item.unavailable;
+  }
+
+  function refreshAdminPanel() {
+    const activeId = adminProductSelect.value;
+    renderAdminOptions();
+    if (activeId && adminProductSelect.querySelector(`option[value="${activeId}"]`)) {
+      adminProductSelect.value = activeId;
+    }
+    fillAdminForm();
+  }
+  window.__refreshAdminPanel = refreshAdminPanel;
+
+  function updateOverride(id, patch) {
+    const overrides = loadAdminOverrides();
+    overrides[id] = { ...(overrides[id] || {}), ...patch };
+    saveAdminOverrides(overrides);
+  }
+
+  function applyPatchToProduct(id, patch) {
+    const found = getItemById(id);
+    if (!found) return false;
+    const { item } = found;
+    if (typeof patch.price === "string" && patch.price.trim()) item.price = patch.price.trim();
+    if (typeof patch.offer === "string") item.offer = patch.offer.trim();
+    if (typeof patch.unavailable === "boolean") item.unavailable = patch.unavailable;
+    return true;
+  }
+
+  function saveCurrentProduct() {
+    const id = adminProductSelect.value;
+    if (!id) return;
+    const patch = {
+      price: adminPriceInput.value.trim(),
+      offer: adminOfferInput.value.trim(),
+      unavailable: Boolean(adminUnavailableInput.checked)
+    };
+    const ok = applyPatchToProduct(id, patch);
+    if (!ok) {
+      setAdminStatus("Product update failed.");
+      return;
+    }
+    updateOverride(id, patch);
+    renderProducts();
+    window.__refreshProductFilters?.();
+    refreshAdminPanel();
+    setAdminStatus("Saved. Product card updated.");
+  }
+
+  function resetCurrentProduct() {
+    const id = adminProductSelect.value;
+    if (!id) return;
+    const found = getItemById(id);
+    if (!found) return;
+    const { item } = found;
+    const patch = {
+      price: item.basePrice || item.price,
+      offer: "",
+      unavailable: false
+    };
+    applyPatchToProduct(id, patch);
+    updateOverride(id, patch);
+    renderProducts();
+    window.__refreshProductFilters?.();
+    refreshAdminPanel();
+    setAdminStatus("Reset done.");
+  }
+
+  openAdminPanelBtn.addEventListener("click", () => {
+    refreshAdminPanel();
+    toggleAdminPanel(true);
+  });
+
+  closeAdminPanelBtn.addEventListener("click", () => {
+    toggleAdminPanel(false);
+  });
+
+  adminSearchInput.addEventListener("input", () => {
+    renderAdminOptions();
+    fillAdminForm();
+  });
+
+  adminProductSelect.addEventListener("change", fillAdminForm);
+  saveAdminChangesBtn.addEventListener("click", saveCurrentProduct);
+  resetAdminChangesBtn.addEventListener("click", resetCurrentProduct);
+
+  renderAdminOptions();
+  fillAdminForm();
 }

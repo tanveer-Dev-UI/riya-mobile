@@ -24,15 +24,15 @@ app.get("/", (req, res) => {
 });
 
 app.get("/admin", (req, res) => {
-  res.sendFile(path.join(__dirname, "admin.html"));
+  res.redirect("/");
 });
 
 app.get("/admin.html", (req, res) => {
-  res.redirect("/admin");
+  res.redirect("/");
 });
 
 app.get("/admin.hmtl", (req, res) => {
-  res.redirect("/admin");
+  res.redirect("/");
 });
 
 app.use(express.static(__dirname));
