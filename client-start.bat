@@ -23,23 +23,12 @@ set ADMIN_USER=admin
 set ADMIN_PASS=riya@123
 set PORT=4000
 
-where pm2 >nul 2>&1
-if errorlevel 1 (
-  echo Installing PM2 (first time only)...
-  call npm install -g pm2
-  if errorlevel 1 (
-    echo PM2 install failed.
-    pause
-    exit /b 1
-  )
-)
-
 echo Starting server with PM2...
-pm2 describe riya-mobile-shop >nul 2>&1
+npx pm2 describe riya-mobile-shop >nul 2>&1
 if errorlevel 1 (
-  pm2 start ecosystem.config.cjs --only riya-mobile-shop --update-env
+  npx pm2 start ecosystem.config.cjs --only riya-mobile-shop --update-env
 ) else (
-  pm2 restart riya-mobile-shop --update-env
+  npx pm2 restart riya-mobile-shop --update-env
 )
 
 timeout /t 3 /nobreak >nul
@@ -51,7 +40,7 @@ echo Website: http://localhost:4000/
 echo Admin:   http://localhost:4000/admin
 echo.
 echo PM2 status:
-pm2 status
+npx pm2 status
 echo.
 echo Stop server: client-stop.bat
 echo One-time auto-start setup after reboot: setup-24x7.bat

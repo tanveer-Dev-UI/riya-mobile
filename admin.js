@@ -133,13 +133,23 @@ adminLoginBtn?.addEventListener("click", async () => {
   const userId = loginUserId?.value?.trim() || "";
   const password = loginPassword?.value || "";
 
-  const res = await api("/api/admin/login", {
-    method: "POST",
-    body: JSON.stringify({ userId, password })
-  });
+  let res;
+  try {
+    res = await api("/api/admin/login", {
+      method: "POST",
+      body: JSON.stringify({ userId, password })
+    });
+  } catch {
+    if (loginNote) loginNote.textContent = "Server connect nahi hua. Pehle server start karo.";
+    return;
+  }
 
   if (!res.ok) {
-    if (loginNote) loginNote.textContent = "Invalid credentials.";
+    if (res.status === 401) {
+      if (loginNote) loginNote.textContent = "Invalid credentials.";
+      return;
+    }
+    if (loginNote) loginNote.textContent = "Login API error. Server/start mode check karo.";
     return;
   }
 

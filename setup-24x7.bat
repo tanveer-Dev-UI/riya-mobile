@@ -9,17 +9,6 @@ if errorlevel 1 (
   exit /b 1
 )
 
-where pm2 >nul 2>&1
-if errorlevel 1 (
-  echo Installing PM2...
-  call npm install -g pm2
-  if errorlevel 1 (
-    echo PM2 install failed.
-    pause
-    exit /b 1
-  )
-)
-
 if not exist node_modules (
   echo Installing project dependencies...
   call npm install
@@ -31,14 +20,14 @@ if not exist node_modules (
 )
 
 echo Saving current PM2 process list...
-pm2 save
+npx pm2 save
 
 echo.
 echo Running PM2 startup command...
 echo NOTE: Agar admin permission maange to allow karo.
-pm2 startup
+npx pm2 startup
 
 echo.
 echo Now run client-start.bat once, then restart system and verify:
-echo pm2 status
+echo npx pm2 status
 pause
