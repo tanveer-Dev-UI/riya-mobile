@@ -1,0 +1,983 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Riya Mobile</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <a href="#" class="logo">
+        <span class="logo-mark">RM</span>
+        <span class="logo-text">Riya<span>Mobile</span></span>
+      </a>
+
+      <form class="search" id="productSearch" role="search" aria-label="Search products">
+        <input type="search" id="globalSearch" placeholder="Search for mobiles, accessories and more" />
+        <button type="submit">Search</button>
+      </form>
+
+      <a class="whatsapp-btn" href="https://wa.me/916306908747?text=Hi%2C%20I%20want%20to%20pre-order%20a%20phone" target="_blank" rel="noopener noreferrer">
+        <span class="wa-short">WhatsApp</span>
+        <span class="wa-full">Pre-Order on WhatsApp</span>
+      </a>
+    </div>
+
+    <nav class="mobile-menu" id="mobileMenu" aria-hidden="true">
+      <a href="#cat-mobiles">Mobiles</a>
+      <a href="#cat-accessories">Accessories</a>
+      <a href="#mobiles-products">New Launch</a>
+      <a href="#deals-products">Offers</a>
+    </nav>
+
+    <nav class="category-nav" aria-label="Popular categories">
+      <a href="#cat-mobiles">Mobiles</a>
+      <a href="#cat-best-deals">Best Deals</a>
+      <a href="#cat-5g">5G Phones</a>
+      <a href="#cat-chargers">Chargers</a>
+      <a href="#cat-audio">Neckbands</a>
+      <a href="#cat-accessories">Accessories</a>
+    </nav>
+  </header>
+
+  <main class="hero-shell">
+    <section class="hero-mosaic" aria-label="Featured banners">
+      <div class="main-banner">
+        <div class="slides" id="slides">
+          <article class="slide slide-1">
+            <div class="slide-content">
+              <div>
+                <p class="slide-tag">Ultra Launch</p>
+                <h2>Galaxy & OnePlus Flagship Week</h2>
+                <p>Top premium phones with exchange bonus and instant pickup.</p>
+                <div class="slide-cta">
+                  <span class="price-badge">From ₹39,999</span>
+                  <a href="#cat-mobiles" class="slide-btn">Shop Now</a>
+                </div>
+              </div>
+              <img src="https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&fit=crop&w=900&q=80" alt="Flagship phones banner" />
+            </div>
+          </article>
+          <article class="slide slide-2">
+            <div class="slide-content">
+              <div>
+                <p class="slide-tag">Audio Zone</p>
+                <h2>Premium Earbuds & Neckbands</h2>
+                <p>Bass-heavy audio picks with full warranty and latest models.</p>
+                <div class="slide-cta">
+                  <span class="price-badge">Start ₹999</span>
+                  <a href="#cat-audio" class="slide-btn">Shop Now</a>
+                </div>
+              </div>
+              <img src="https://images.unsplash.com/photo-1546435770-a3e426bf472b?auto=format&fit=crop&w=900&q=80" alt="Earbuds and neckbands offer" />
+            </div>
+          </article>
+          <article class="slide slide-3">
+            <div class="slide-content">
+              <div>
+                <p class="slide-tag">Fast Power</p>
+                <h2>Chargers, Cables & Power Banks</h2>
+                <p>Original accessories, lightning-fast charging, combo pricing.</p>
+                <div class="slide-cta">
+                  <span class="price-badge">Combo ₹699</span>
+                  <a href="#cat-chargers" class="slide-btn">Shop Now</a>
+                </div>
+              </div>
+              <img src="https://images.unsplash.com/photo-1583863788434-e58a36330cf0?auto=format&fit=crop&w=900&q=80" alt="Charger and cable combo offer" />
+            </div>
+          </article>
+          <article class="slide slide-4">
+            <div class="slide-content">
+              <div>
+                <p class="slide-tag">Smart Upgrade</p>
+                <h2>Exchange + EMI Mega Benefits</h2>
+                <p>Budget-friendly monthly plans with old-device exchange options.</p>
+                <div class="slide-cta">
+                  <span class="price-badge">EMI ₹1,899/mo</span>
+                  <a href="#cat-best-deals" class="slide-btn">Shop Now</a>
+                </div>
+              </div>
+              <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=900&q=80" alt="EMI and exchange banner" />
+            </div>
+          </article>
+          <article class="slide slide-5">
+            <div class="slide-content">
+              <div>
+                <p class="slide-tag">Protection</p>
+                <h2>Covers, Glass & Care Kits</h2>
+                <p>Full protection line-up for every phone in your cart.</p>
+                <div class="slide-cta">
+                  <span class="price-badge">From ₹199</span>
+                  <a href="#cat-accessories" class="slide-btn">Shop Now</a>
+                </div>
+              </div>
+              <img src="https://images.unsplash.com/photo-1601593346740-925612772716?auto=format&fit=crop&w=900&q=80" alt="Accessories and phone covers banner" />
+            </div>
+          </article>
+        </div>
+        <div class="slider-controls">
+          <button id="prevSlide" type="button" aria-label="Previous banner">‹</button>
+          <div class="dots" id="sliderDots" aria-label="Slide indicators"></div>
+          <button id="nextSlide" type="button" aria-label="Next banner">›</button>
+        </div>
+      </div>
+
+      <aside class="side-promos">
+        <a class="promo-card promo-a" href="#cat-best-deals">
+          <p>Big Savings</p>
+          <h3>Up to 70% Off Accessories</h3>
+          <span>Explore Deals</span>
+        </a>
+        <a class="promo-card promo-b" href="#cat-mobiles">
+          <p>Quick Pickup</p>
+          <h3>Order Online, Collect Same Day</h3>
+          <span>Check Availability</span>
+        </a>
+      </aside>
+    </section>
+
+    <section class="visual-categories" aria-label="All product categories">
+      <a class="visual-cat" id="cat-mobiles" href="#mobiles-products">
+        <img src="https://images.unsplash.com/photo-1556656793-08538906a9f8?auto=format&fit=crop&w=700&q=85" loading="lazy" decoding="async" alt="Mobiles category" />
+        <span>Mobiles</span>
+      </a>
+      <a class="visual-cat" id="cat-best-deals" href="#deals-products">
+        <img src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?auto=format&fit=crop&w=700&q=85" loading="lazy" decoding="async" alt="Best deals category" />
+        <span>Best Deals</span>
+      </a>
+      <a class="visual-cat" id="cat-5g" href="#mobiles-products">
+        <img src="https://images.unsplash.com/photo-1512499617640-c74ae3a79d37?auto=format&fit=crop&w=700&q=85" loading="lazy" decoding="async" alt="5G phones category" />
+        <span>5G Phones</span>
+      </a>
+      <a class="visual-cat" id="cat-chargers" href="#acc-products">
+        <img src="https://images.unsplash.com/photo-1583394838336-acd977736f90?auto=format&fit=crop&w=700&q=85" loading="lazy" decoding="async" alt="Chargers category" />
+        <span>Chargers</span>
+      </a>
+      <a class="visual-cat" id="cat-audio" href="#audio-products">
+        <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=700&q=85" loading="lazy" decoding="async" alt="Audio category" />
+        <span>Audio</span>
+      </a>
+      <a class="visual-cat" id="cat-accessories" href="#acc-products">
+        <img src="https://images.unsplash.com/photo-1551721434-8b94ddff0e6d?auto=format&fit=crop&w=700&q=85" loading="lazy" decoding="async" alt="Accessories category" />
+        <span>Accessories</span>
+      </a>
+    </section>
+
+    <section class="product-tools" aria-label="Product filters">
+      <div class="filter-pills" id="filterPills">
+        <button type="button" class="pill active" data-filter="all">All Products</button>
+        <button type="button" class="pill" data-filter="deals">Best Deals</button>
+        <button type="button" class="pill" data-filter="mobiles">Mobiles</button>
+        <button type="button" class="pill" data-filter="audio">Audio</button>
+        <button type="button" class="pill" data-filter="accessories">Accessories</button>
+      </div>
+      <div class="advanced-filters">
+        <label>
+          <span>Brand</span>
+          <select id="brandFilter">
+            <option value="all">All Brands</option>
+            <option value="Samsung">Samsung</option>
+            <option value="OnePlus">OnePlus</option>
+            <option value="Apple">Apple</option>
+            <option value="Xiaomi">Xiaomi</option>
+            <option value="Vivo">Vivo</option>
+            <option value="Oppo">Oppo</option>
+            <option value="Motorola">Motorola</option>
+            <option value="Nothing">Nothing</option>
+            <option value="Google">Google</option>
+            <option value="Realme">Realme</option>
+            <option value="iQOO">iQOO</option>
+            <option value="ASUS">ASUS</option>
+            <option value="boAt">boAt</option>
+            <option value="Sony">Sony</option>
+            <option value="JBL">JBL</option>
+            <option value="Noise">Noise</option>
+            <option value="Fire-Boltt">Fire-Boltt</option>
+            <option value="Anker">Anker</option>
+            <option value="Spigen">Spigen</option>
+            <option value="Portronics">Portronics</option>
+            <option value="SanDisk">SanDisk</option>
+            <option value="Baseus">Baseus</option>
+          </select>
+        </label>
+        <label>
+          <span>Price</span>
+          <select id="priceFilter">
+            <option value="all">All Prices</option>
+            <option value="0-999">Under 1,000</option>
+            <option value="1000-4999">1,000 - 4,999</option>
+            <option value="5000-19999">5,000 - 19,999</option>
+            <option value="20000-49999">20,000 - 49,999</option>
+            <option value="50000-999999">50,000+</option>
+          </select>
+        </label>
+        <label>
+          <span>Sort</span>
+          <select id="sortFilter">
+            <option value="default">Featured</option>
+            <option value="price-asc">Price: Low to High</option>
+            <option value="price-desc">Price: High to Low</option>
+            <option value="name-asc">Name: A-Z</option>
+          </select>
+        </label>
+        <button type="button" id="clearFilters" class="clear-btn">Reset</button>
+      </div>
+      <p class="filter-note" id="filterNote">Showing all products</p>
+    </section>
+
+    <section class="product-showcase" id="deals-products" data-category="deals" aria-label="Best deals products">
+      <div class="section-head">
+        <h3>Best Deals Today</h3>
+        <a href="#">View All</a>
+      </div>
+      <div class="product-grid">
+        <article class="product-card">
+          <img src="https://images.unsplash.com/photo-1512499617640-c74ae3a79d37?auto=format&fit=crop&w=1200&q=90"
+               srcset="https://images.unsplash.com/photo-1512499617640-c74ae3a79d37?auto=format&fit=crop&w=420&q=85 420w, https://images.unsplash.com/photo-1512499617640-c74ae3a79d37?auto=format&fit=crop&w=840&q=88 840w, https://images.unsplash.com/photo-1512499617640-c74ae3a79d37?auto=format&fit=crop&w=1200&q=90 1200w"
+               sizes="(max-width: 640px) 48vw, (max-width: 1024px) 31vw, 23vw"
+               loading="lazy"
+               decoding="async"
+               alt="Deal phone product" />
+          <h4>5G Phones Under 20K</h4>
+          <p>Top picks with bank discounts</p>
+          <span>From ₹14,999</span>
+        </article>
+        <article class="product-card">
+          <img src="https://images.unsplash.com/photo-1526406915894-7bcd65f60845?auto=format&fit=crop&w=1200&q=90"
+               srcset="https://images.unsplash.com/photo-1526406915894-7bcd65f60845?auto=format&fit=crop&w=420&q=85 420w, https://images.unsplash.com/photo-1526406915894-7bcd65f60845?auto=format&fit=crop&w=840&q=88 840w, https://images.unsplash.com/photo-1526406915894-7bcd65f60845?auto=format&fit=crop&w=1200&q=90 1200w"
+               sizes="(max-width: 640px) 48vw, (max-width: 1024px) 31vw, 23vw"
+               loading="lazy"
+               decoding="async"
+               alt="Exchange deal phone" />
+          <h4>Exchange Special Deals</h4>
+          <p>Extra value on old devices</p>
+          <span>Save up to ₹8,000</span>
+        </article>
+        <article class="product-card">
+          <img src="https://images.unsplash.com/photo-1572569511254-d8f925fe2cbb?auto=format&fit=crop&w=1200&q=90"
+               srcset="https://images.unsplash.com/photo-1572569511254-d8f925fe2cbb?auto=format&fit=crop&w=420&q=85 420w, https://images.unsplash.com/photo-1572569511254-d8f925fe2cbb?auto=format&fit=crop&w=840&q=88 840w, https://images.unsplash.com/photo-1572569511254-d8f925fe2cbb?auto=format&fit=crop&w=1200&q=90 1200w"
+               sizes="(max-width: 640px) 48vw, (max-width: 1024px) 31vw, 23vw"
+               loading="lazy"
+               decoding="async"
+               alt="EMI phone deal" />
+          <h4>No-Cost EMI Picks</h4>
+          <p>Flexible monthly payment options</p>
+          <span>From ₹1,499/mo</span>
+        </article>
+        <article class="product-card">
+          <img src="https://images.unsplash.com/photo-1603898037225-1c7a9b3ce7ea?auto=format&fit=crop&w=1200&q=90"
+               srcset="https://images.unsplash.com/photo-1603898037225-1c7a9b3ce7ea?auto=format&fit=crop&w=420&q=85 420w, https://images.unsplash.com/photo-1603898037225-1c7a9b3ce7ea?auto=format&fit=crop&w=840&q=88 840w, https://images.unsplash.com/photo-1603898037225-1c7a9b3ce7ea?auto=format&fit=crop&w=1200&q=90 1200w"
+               sizes="(max-width: 640px) 48vw, (max-width: 1024px) 31vw, 23vw"
+               loading="lazy"
+               decoding="async"
+               alt="Accessory combo deal" />
+          <h4>Accessory Combo Offers</h4>
+          <p>Case + glass + charger packs</p>
+          <span>From ₹699</span>
+        </article>
+        <article class="product-card">
+          <img src="https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&fit=crop&w=1200&q=90"
+               srcset="https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&fit=crop&w=420&q=85 420w, https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&fit=crop&w=840&q=88 840w, https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&fit=crop&w=1200&q=90 1200w"
+               sizes="(max-width: 640px) 48vw, (max-width: 1024px) 31vw, 23vw"
+               loading="lazy"
+               decoding="async"
+               alt="Premium smartphone limited offer" />
+          <h4>Flagship Limited Deals</h4>
+          <p>Premium launch devices on offer</p>
+          <span>Save up to ₹10,000</span>
+        </article>
+        <article class="product-card">
+          <img src="https://images.unsplash.com/photo-1556656793-08538906a9f8?auto=format&fit=crop&w=1200&q=90"
+               srcset="https://images.unsplash.com/photo-1556656793-08538906a9f8?auto=format&fit=crop&w=420&q=85 420w, https://images.unsplash.com/photo-1556656793-08538906a9f8?auto=format&fit=crop&w=840&q=88 840w, https://images.unsplash.com/photo-1556656793-08538906a9f8?auto=format&fit=crop&w=1200&q=90 1200w"
+               sizes="(max-width: 640px) 48vw, (max-width: 1024px) 31vw, 23vw"
+               loading="lazy"
+               decoding="async"
+               alt="Mid range smartphone deal" />
+          <h4>Mid-Range Best Value</h4>
+          <p>Balanced performance picks</p>
+          <span>From ₹18,499</span>
+        </article>
+        <article class="product-card">
+          <img src="https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=1200&q=90"
+               srcset="https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=420&q=85 420w, https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=840&q=88 840w, https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=1200&q=90 1200w"
+               sizes="(max-width: 640px) 48vw, (max-width: 1024px) 31vw, 23vw"
+               loading="lazy"
+               decoding="async"
+               alt="Top exchange bonus deal" />
+          <h4>Exchange Bonus Phones</h4>
+          <p>Extra trade-in value today</p>
+          <span>Bonus up to ₹6,500</span>
+        </article>
+        <article class="product-card">
+          <img src="https://images.unsplash.com/photo-1526406915894-7bcd65f60845?auto=format&fit=crop&w=1200&q=90"
+               srcset="https://images.unsplash.com/photo-1526406915894-7bcd65f60845?auto=format&fit=crop&w=420&q=85 420w, https://images.unsplash.com/photo-1526406915894-7bcd65f60845?auto=format&fit=crop&w=840&q=88 840w, https://images.unsplash.com/photo-1526406915894-7bcd65f60845?auto=format&fit=crop&w=1200&q=90 1200w"
+               sizes="(max-width: 640px) 48vw, (max-width: 1024px) 31vw, 23vw"
+               loading="lazy"
+               decoding="async"
+               alt="Festival combo mobile deal" />
+          <h4>Festival Combo Picks</h4>
+          <p>Phone + accessories bundle</p>
+          <span>From ₹22,999</span>
+        </article>
+        <article class="product-card">
+          <img src="https://images.unsplash.com/photo-1605236453806-6ff36851218e?auto=format&fit=crop&w=1200&q=90"
+               srcset="https://images.unsplash.com/photo-1605236453806-6ff36851218e?auto=format&fit=crop&w=420&q=85 420w, https://images.unsplash.com/photo-1605236453806-6ff36851218e?auto=format&fit=crop&w=840&q=88 840w, https://images.unsplash.com/photo-1605236453806-6ff36851218e?auto=format&fit=crop&w=1200&q=90 1200w"
+               sizes="(max-width: 640px) 48vw, (max-width: 1024px) 31vw, 23vw"
+               loading="lazy"
+               decoding="async"
+               alt="Weekend flash sale smartphone" />
+          <h4>Weekend Flash Sale</h4>
+          <p>Limited stock flagship discounts</p>
+          <span>From ₹24,999</span>
+        </article>
+        <article class="product-card">
+          <img src="https://images.unsplash.com/photo-1611791484670-ce19b801d192?auto=format&fit=crop&w=1200&q=90"
+               srcset="https://images.unsplash.com/photo-1611791484670-ce19b801d192?auto=format&fit=crop&w=420&q=85 420w, https://images.unsplash.com/photo-1611791484670-ce19b801d192?auto=format&fit=crop&w=840&q=88 840w, https://images.unsplash.com/photo-1611791484670-ce19b801d192?auto=format&fit=crop&w=1200&q=90 1200w"
+               sizes="(max-width: 640px) 48vw, (max-width: 1024px) 31vw, 23vw"
+               loading="lazy"
+               decoding="async"
+               alt="EMI mega deal product" />
+          <h4>EMI Mega Savings</h4>
+          <p>No-cost EMI on top brands</p>
+          <span>From ₹1,199/mo</span>
+        </article>
+        <article class="product-card">
+          <img src="https://images.unsplash.com/photo-1611746869696-b180a6f94154?auto=format&fit=crop&w=1200&q=90"
+               srcset="https://images.unsplash.com/photo-1611746869696-b180a6f94154?auto=format&fit=crop&w=420&q=85 420w, https://images.unsplash.com/photo-1611746869696-b180a6f94154?auto=format&fit=crop&w=840&q=88 840w, https://images.unsplash.com/photo-1611746869696-b180a6f94154?auto=format&fit=crop&w=1200&q=90 1200w"
+               sizes="(max-width: 640px) 48vw, (max-width: 1024px) 31vw, 23vw"
+               loading="lazy"
+               decoding="async"
+               alt="Hot deal premium mobile" />
+          <h4>Premium Hot Deals</h4>
+          <p>Extra bank cashback available</p>
+          <span>Save up to ₹9,500</span>
+        </article>
+        <article class="product-card">
+          <img src="https://images.unsplash.com/photo-1600695268275-1a6468700bd5?auto=format&fit=crop&w=1200&q=90"
+               srcset="https://images.unsplash.com/photo-1600695268275-1a6468700bd5?auto=format&fit=crop&w=420&q=85 420w, https://images.unsplash.com/photo-1600695268275-1a6468700bd5?auto=format&fit=crop&w=840&q=88 840w, https://images.unsplash.com/photo-1600695268275-1a6468700bd5?auto=format&fit=crop&w=1200&q=90 1200w"
+               sizes="(max-width: 640px) 48vw, (max-width: 1024px) 31vw, 23vw"
+               loading="lazy"
+               decoding="async"
+               alt="Student budget smartphone deals" />
+          <h4>Student Budget Picks</h4>
+          <p>Reliable models under 15K</p>
+          <span>From ₹11,499</span>
+        </article>
+        <article class="product-card">
+          <img src="https://images.unsplash.com/photo-1604004555489-723a93d6ce74?auto=format&fit=crop&w=1200&q=90"
+               srcset="https://images.unsplash.com/photo-1604004555489-723a93d6ce74?auto=format&fit=crop&w=420&q=85 420w, https://images.unsplash.com/photo-1604004555489-723a93d6ce74?auto=format&fit=crop&w=840&q=88 840w, https://images.unsplash.com/photo-1604004555489-723a93d6ce74?auto=format&fit=crop&w=1200&q=90 1200w"
+               sizes="(max-width: 640px) 48vw, (max-width: 1024px) 31vw, 23vw"
+               loading="lazy"
+               decoding="async"
+               alt="5G clearance sale model" />
+          <h4>5G Clearance Sale</h4>
+          <p>Fast shipping + instant pickup</p>
+          <span>From ₹16,999</span>
+        </article>
+        <article class="product-card">
+          <img src="https://images.unsplash.com/photo-1612444530582-fc66183b16f7?auto=format&fit=crop&w=1200&q=90"
+               srcset="https://images.unsplash.com/photo-1612444530582-fc66183b16f7?auto=format&fit=crop&w=420&q=85 420w, https://images.unsplash.com/photo-1612444530582-fc66183b16f7?auto=format&fit=crop&w=840&q=88 840w, https://images.unsplash.com/photo-1612444530582-fc66183b16f7?auto=format&fit=crop&w=1200&q=90 1200w"
+               sizes="(max-width: 640px) 48vw, (max-width: 1024px) 31vw, 23vw"
+               loading="lazy"
+               decoding="async"
+               alt="Camera phone deal offer" />
+          <h4>Camera Champion Deals</h4>
+          <p>OIS camera phones in offer</p>
+          <span>From ₹21,499</span>
+        </article>
+        <article class="product-card">
+          <img src="https://images.unsplash.com/photo-1580910051074-3eb694886505?auto=format&fit=crop&w=1200&q=90"
+               srcset="https://images.unsplash.com/photo-1580910051074-3eb694886505?auto=format&fit=crop&w=420&q=85 420w, https://images.unsplash.com/photo-1580910051074-3eb694886505?auto=format&fit=crop&w=840&q=88 840w, https://images.unsplash.com/photo-1580910051074-3eb694886505?auto=format&fit=crop&w=1200&q=90 1200w"
+               sizes="(max-width: 640px) 48vw, (max-width: 1024px) 31vw, 23vw"
+               loading="lazy"
+               decoding="async"
+               alt="Launch discount model" />
+          <h4>New Launch Discount</h4>
+          <p>Fresh arrivals with intro offer</p>
+          <span>From ₹28,999</span>
+        </article>
+        <article class="product-card">
+          <img src="https://images.unsplash.com/photo-1596558450268-9c27524ba856?auto=format&fit=crop&w=1200&q=90"
+               srcset="https://images.unsplash.com/photo-1596558450268-9c27524ba856?auto=format&fit=crop&w=420&q=85 420w, https://images.unsplash.com/photo-1596558450268-9c27524ba856?auto=format&fit=crop&w=840&q=88 840w, https://images.unsplash.com/photo-1596558450268-9c27524ba856?auto=format&fit=crop&w=1200&q=90 1200w"
+               sizes="(max-width: 640px) 48vw, (max-width: 1024px) 31vw, 23vw"
+               loading="lazy"
+               decoding="async"
+               alt="Big value combo offer" />
+          <h4>Big Value Combos</h4>
+          <p>Phone + earbuds + cover sets</p>
+          <span>From ₹26,499</span>
+        </article>
+      </div>
+    </section>
+
+    <section class="product-showcase" id="mobiles-products" data-category="mobiles" aria-label="Mobile products">
+      <div class="section-head">
+        <h3>Trending Mobiles</h3>
+        <a href="#">View All</a>
+      </div>
+      <div class="product-grid">
+        <article class="product-card">
+          <img src="https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&fit=crop&w=1200&q=90"
+               srcset="https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&fit=crop&w=420&q=85 420w, https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&fit=crop&w=840&q=88 840w, https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&fit=crop&w=1200&q=90 1200w"
+               sizes="(max-width: 640px) 48vw, (max-width: 1024px) 31vw, 23vw"
+               loading="lazy"
+               decoding="async"
+               alt="Samsung flagship phone" />
+          <h4>Samsung Galaxy S Series</h4>
+          <p>12GB | 256GB | 5G</p>
+          <span>From ₹74,999</span>
+        </article>
+        <article class="product-card">
+          <img src="https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=1200&q=90"
+               srcset="https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=420&q=85 420w, https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=840&q=88 840w, https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=1200&q=90 1200w"
+               sizes="(max-width: 640px) 48vw, (max-width: 1024px) 31vw, 23vw"
+               loading="lazy"
+               decoding="async"
+               alt="OnePlus smartphone" />
+          <h4>OnePlus Premium Line</h4>
+          <p>8GB | 128GB | AMOLED</p>
+          <span>From ₹39,999</span>
+        </article>
+        <article class="product-card">
+          <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=1200&q=90"
+               srcset="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=420&q=85 420w, https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=840&q=88 840w, https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=1200&q=90 1200w"
+               sizes="(max-width: 640px) 48vw, (max-width: 1024px) 31vw, 23vw"
+               loading="lazy"
+               decoding="async"
+               alt="iPhone model" />
+          <h4>Apple iPhone Series</h4>
+          <p>Latest Colors In Stock</p>
+          <span>From ₹69,900</span>
+        </article>
+        <article class="product-card">
+          <img src="https://images.unsplash.com/photo-1565849904461-04a58ad377e0?auto=format&fit=crop&w=1200&q=90"
+               srcset="https://images.unsplash.com/photo-1565849904461-04a58ad377e0?auto=format&fit=crop&w=420&q=85 420w, https://images.unsplash.com/photo-1565849904461-04a58ad377e0?auto=format&fit=crop&w=840&q=88 840w, https://images.unsplash.com/photo-1565849904461-04a58ad377e0?auto=format&fit=crop&w=1200&q=90 1200w"
+               sizes="(max-width: 640px) 48vw, (max-width: 1024px) 31vw, 23vw"
+               loading="lazy"
+               decoding="async"
+               alt="Nothing phone" />
+          <h4>Nothing Phone Lineup</h4>
+          <p>Unique Design | Fast UI</p>
+          <span>From ₹29,999</span>
+        </article>
+        <article class="product-card">
+          <img src="https://images.unsplash.com/photo-1556656793-08538906a9f8?auto=format&fit=crop&w=1200&q=90"
+               srcset="https://images.unsplash.com/photo-1556656793-08538906a9f8?auto=format&fit=crop&w=420&q=85 420w, https://images.unsplash.com/photo-1556656793-08538906a9f8?auto=format&fit=crop&w=840&q=88 840w, https://images.unsplash.com/photo-1556656793-08538906a9f8?auto=format&fit=crop&w=1200&q=90 1200w"
+               sizes="(max-width: 640px) 48vw, (max-width: 1024px) 31vw, 23vw"
+               loading="lazy"
+               decoding="async"
+               alt="Google Pixel phone" />
+          <h4>Google Pixel Series</h4>
+          <p>Best Camera | Clean Android</p>
+          <span>From ₹54,999</span>
+        </article>
+        <article class="product-card">
+          <img src="https://images.unsplash.com/photo-1551816230-ef5deaed4a26?auto=format&fit=crop&w=1200&q=90"
+               srcset="https://images.unsplash.com/photo-1551816230-ef5deaed4a26?auto=format&fit=crop&w=420&q=85 420w, https://images.unsplash.com/photo-1551816230-ef5deaed4a26?auto=format&fit=crop&w=840&q=88 840w, https://images.unsplash.com/photo-1551816230-ef5deaed4a26?auto=format&fit=crop&w=1200&q=90 1200w"
+               sizes="(max-width: 640px) 48vw, (max-width: 1024px) 31vw, 23vw"
+               loading="lazy"
+               decoding="async"
+               alt="Vivo camera smartphone" />
+          <h4>Vivo Camera Edition</h4>
+          <p>Portrait Master | Night Mode</p>
+          <span>From ₹27,499</span>
+        </article>
+        <article class="product-card">
+          <img src="https://images.unsplash.com/photo-1523206489230-c012c64b2b48?auto=format&fit=crop&w=1200&q=90"
+               srcset="https://images.unsplash.com/photo-1523206489230-c012c64b2b48?auto=format&fit=crop&w=420&q=85 420w, https://images.unsplash.com/photo-1523206489230-c012c64b2b48?auto=format&fit=crop&w=840&q=88 840w, https://images.unsplash.com/photo-1523206489230-c012c64b2b48?auto=format&fit=crop&w=1200&q=90 1200w"
+               sizes="(max-width: 640px) 48vw, (max-width: 1024px) 31vw, 23vw"
+               loading="lazy"
+               decoding="async"
+               alt="Xiaomi premium phone" />
+          <h4>Xiaomi 5G Collection</h4>
+          <p>High Value | Fast Charging</p>
+          <span>From ₹19,999</span>
+        </article>
+        <article class="product-card">
+          <img src="https://images.unsplash.com/photo-1580910051074-3eb694886505?auto=format&fit=crop&w=1200&q=90"
+               srcset="https://images.unsplash.com/photo-1580910051074-3eb694886505?auto=format&fit=crop&w=420&q=85 420w, https://images.unsplash.com/photo-1580910051074-3eb694886505?auto=format&fit=crop&w=840&q=88 840w, https://images.unsplash.com/photo-1580910051074-3eb694886505?auto=format&fit=crop&w=1200&q=90 1200w"
+               sizes="(max-width: 640px) 48vw, (max-width: 1024px) 31vw, 23vw"
+               loading="lazy"
+               decoding="async"
+               alt="Motorola edge smartphone" />
+          <h4>Motorola Edge Picks</h4>
+          <p>Near Stock Android | 5G</p>
+          <span>From ₹22,999</span>
+        </article>
+        <article class="product-card">
+          <img src="https://images.unsplash.com/photo-1605236453806-6ff36851218e?auto=format&fit=crop&w=1200&q=90"
+               srcset="https://images.unsplash.com/photo-1605236453806-6ff36851218e?auto=format&fit=crop&w=420&q=85 420w, https://images.unsplash.com/photo-1605236453806-6ff36851218e?auto=format&fit=crop&w=840&q=88 840w, https://images.unsplash.com/photo-1605236453806-6ff36851218e?auto=format&fit=crop&w=1200&q=90 1200w"
+               sizes="(max-width: 640px) 48vw, (max-width: 1024px) 31vw, 23vw"
+               loading="lazy"
+               decoding="async"
+               alt="Oppo reno smartphone" />
+          <h4>Oppo Reno Series</h4>
+          <p>Portrait Camera | 67W Charge</p>
+          <span>From ₹31,999</span>
+        </article>
+        <article class="product-card">
+          <img src="https://images.unsplash.com/photo-1603899122634-f086ca5f5ddd?auto=format&fit=crop&w=1200&q=90"
+               srcset="https://images.unsplash.com/photo-1603899122634-f086ca5f5ddd?auto=format&fit=crop&w=420&q=85 420w, https://images.unsplash.com/photo-1603899122634-f086ca5f5ddd?auto=format&fit=crop&w=840&q=88 840w, https://images.unsplash.com/photo-1603899122634-f086ca5f5ddd?auto=format&fit=crop&w=1200&q=90 1200w"
+               sizes="(max-width: 640px) 48vw, (max-width: 1024px) 31vw, 23vw"
+               loading="lazy"
+               decoding="async"
+               alt="Realme gt smartphone" />
+          <h4>Realme GT Line</h4>
+          <p>High refresh display | 5G</p>
+          <span>From ₹24,499</span>
+        </article>
+        <article class="product-card">
+          <img src="https://images.unsplash.com/photo-1611746869696-b180a6f94154?auto=format&fit=crop&w=1200&q=90"
+               srcset="https://images.unsplash.com/photo-1611746869696-b180a6f94154?auto=format&fit=crop&w=420&q=85 420w, https://images.unsplash.com/photo-1611746869696-b180a6f94154?auto=format&fit=crop&w=840&q=88 840w, https://images.unsplash.com/photo-1611746869696-b180a6f94154?auto=format&fit=crop&w=1200&q=90 1200w"
+               sizes="(max-width: 640px) 48vw, (max-width: 1024px) 31vw, 23vw"
+               loading="lazy"
+               decoding="async"
+               alt="Poco performance phone" />
+          <h4>Poco Performance Series</h4>
+          <p>Gaming chip | Turbo charge</p>
+          <span>From ₹20,999</span>
+        </article>
+        <article class="product-card">
+          <img src="https://images.unsplash.com/photo-1609091839311-d5365f9ff1c5?auto=format&fit=crop&w=1200&q=90"
+               srcset="https://images.unsplash.com/photo-1609091839311-d5365f9ff1c5?auto=format&fit=crop&w=420&q=85 420w, https://images.unsplash.com/photo-1609091839311-d5365f9ff1c5?auto=format&fit=crop&w=840&q=88 840w, https://images.unsplash.com/photo-1609091839311-d5365f9ff1c5?auto=format&fit=crop&w=1200&q=90 1200w"
+               sizes="(max-width: 640px) 48vw, (max-width: 1024px) 31vw, 23vw"
+               loading="lazy"
+               decoding="async"
+               alt="iQOO gaming phone" />
+          <h4>iQOO Turbo Models</h4>
+          <p>Snapdragon | 120Hz AMOLED</p>
+          <span>From ₹29,499</span>
+        </article>
+        <article class="product-card">
+          <img src="https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&fit=crop&w=1200&q=90"
+               srcset="https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&fit=crop&w=420&q=85 420w, https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&fit=crop&w=840&q=88 840w, https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&fit=crop&w=1200&q=90 1200w"
+               sizes="(max-width: 640px) 48vw, (max-width: 1024px) 31vw, 23vw"
+               loading="lazy"
+               decoding="async"
+               alt="Samsung fold model" />
+          <h4>Samsung Foldables</h4>
+          <p>Premium fold display options</p>
+          <span>From ₹89,999</span>
+        </article>
+        <article class="product-card">
+          <img src="https://images.unsplash.com/photo-1604004555489-723a93d6ce74?auto=format&fit=crop&w=1200&q=90"
+               srcset="https://images.unsplash.com/photo-1604004555489-723a93d6ce74?auto=format&fit=crop&w=420&q=85 420w, https://images.unsplash.com/photo-1604004555489-723a93d6ce74?auto=format&fit=crop&w=840&q=88 840w, https://images.unsplash.com/photo-1604004555489-723a93d6ce74?auto=format&fit=crop&w=1200&q=90 1200w"
+               sizes="(max-width: 640px) 48vw, (max-width: 1024px) 31vw, 23vw"
+               loading="lazy"
+               decoding="async"
+               alt="OnePlus nord product" />
+          <h4>OnePlus Nord Range</h4>
+          <p>Balanced features | 5G</p>
+          <span>From ₹27,999</span>
+        </article>
+        <article class="product-card">
+          <img src="https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?auto=format&fit=crop&w=1200&q=90"
+               srcset="https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?auto=format&fit=crop&w=420&q=85 420w, https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?auto=format&fit=crop&w=840&q=88 840w, https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?auto=format&fit=crop&w=1200&q=90 1200w"
+               sizes="(max-width: 640px) 48vw, (max-width: 1024px) 31vw, 23vw"
+               loading="lazy"
+               decoding="async"
+               alt="Xiaomi camera phone model" />
+          <h4>Xiaomi Camera Pro</h4>
+          <p>OIS Lens | Dolby Vision</p>
+          <span>From ₹32,499</span>
+        </article>
+        <article class="product-card">
+          <img src="https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?auto=format&fit=crop&w=1200&q=90"
+               srcset="https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?auto=format&fit=crop&w=420&q=85 420w, https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?auto=format&fit=crop&w=840&q=88 840w, https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?auto=format&fit=crop&w=1200&q=90 1200w"
+               sizes="(max-width: 640px) 48vw, (max-width: 1024px) 31vw, 23vw"
+               loading="lazy"
+               decoding="async"
+               alt="Asus rog smartphone" />
+          <h4>ASUS ROG Phone</h4>
+          <p>Ultimate gaming performance</p>
+          <span>From ₹56,999</span>
+        </article>
+      </div>
+    </section>
+
+    <section class="product-showcase" id="audio-products" data-category="audio" aria-label="Audio products">
+      <div class="section-head">
+        <h3>Audio & Wearables</h3>
+        <a href="#">View All</a>
+      </div>
+      <div class="product-grid">
+        <article class="product-card">
+          <img src="https://images.unsplash.com/photo-1546435770-a3e426bf472b?auto=format&fit=crop&w=1200&q=90"
+               srcset="https://images.unsplash.com/photo-1546435770-a3e426bf472b?auto=format&fit=crop&w=420&q=85 420w, https://images.unsplash.com/photo-1546435770-a3e426bf472b?auto=format&fit=crop&w=840&q=88 840w, https://images.unsplash.com/photo-1546435770-a3e426bf472b?auto=format&fit=crop&w=1200&q=90 1200w"
+               sizes="(max-width: 640px) 48vw, (max-width: 1024px) 31vw, 23vw"
+               loading="lazy"
+               decoding="async"
+               alt="Wireless earbuds product" />
+          <h4>True Wireless Earbuds</h4>
+          <p>ENC | 40hr Battery</p>
+          <span>From ₹1,299</span>
+        </article>
+        <article class="product-card">
+          <img src="https://images.unsplash.com/photo-1624298357597-fd92dfbec01d?auto=format&fit=crop&w=1200&q=90"
+               srcset="https://images.unsplash.com/photo-1624298357597-fd92dfbec01d?auto=format&fit=crop&w=420&q=85 420w, https://images.unsplash.com/photo-1624298357597-fd92dfbec01d?auto=format&fit=crop&w=840&q=88 840w, https://images.unsplash.com/photo-1624298357597-fd92dfbec01d?auto=format&fit=crop&w=1200&q=90 1200w"
+               sizes="(max-width: 640px) 48vw, (max-width: 1024px) 31vw, 23vw"
+               loading="lazy"
+               decoding="async"
+               alt="Neckband product" />
+          <h4>Bluetooth Neckbands</h4>
+          <p>Fast Charge | Deep Bass</p>
+          <span>From ₹999</span>
+        </article>
+        <article class="product-card">
+          <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=1200&q=90"
+               srcset="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=420&q=85 420w, https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=840&q=88 840w, https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=1200&q=90 1200w"
+               sizes="(max-width: 640px) 48vw, (max-width: 1024px) 31vw, 23vw"
+               loading="lazy"
+               decoding="async"
+               alt="Smart watch product" />
+          <h4>Smart Watches</h4>
+          <p>Calling | AMOLED Display</p>
+          <span>From ₹1,799</span>
+        </article>
+        <article class="product-card">
+          <img src="https://images.unsplash.com/photo-1585298723682-7115561c51b7?auto=format&fit=crop&w=1200&q=90"
+               srcset="https://images.unsplash.com/photo-1585298723682-7115561c51b7?auto=format&fit=crop&w=420&q=85 420w, https://images.unsplash.com/photo-1585298723682-7115561c51b7?auto=format&fit=crop&w=840&q=88 840w, https://images.unsplash.com/photo-1585298723682-7115561c51b7?auto=format&fit=crop&w=1200&q=90 1200w"
+               sizes="(max-width: 640px) 48vw, (max-width: 1024px) 31vw, 23vw"
+               loading="lazy"
+               decoding="async"
+               alt="Bluetooth speaker product" />
+          <h4>Portable Speakers</h4>
+          <p>Loud Sound | Party Mode</p>
+          <span>From ₹1,499</span>
+        </article>
+        <article class="product-card">
+          <img src="https://images.unsplash.com/photo-1507878866276-a947ef722fee?auto=format&fit=crop&w=1200&q=90"
+               srcset="https://images.unsplash.com/photo-1507878866276-a947ef722fee?auto=format&fit=crop&w=420&q=85 420w, https://images.unsplash.com/photo-1507878866276-a947ef722fee?auto=format&fit=crop&w=840&q=88 840w, https://images.unsplash.com/photo-1507878866276-a947ef722fee?auto=format&fit=crop&w=1200&q=90 1200w"
+               sizes="(max-width: 640px) 48vw, (max-width: 1024px) 31vw, 23vw"
+               loading="lazy"
+               decoding="async"
+               alt="Over ear headphones product" />
+          <h4>Over-Ear Headphones</h4>
+          <p>Deep Bass | Long Comfort</p>
+          <span>From ₹2,299</span>
+        </article>
+        <article class="product-card">
+          <img src="https://images.unsplash.com/photo-1589003077984-894e133dabab?auto=format&fit=crop&w=1200&q=90"
+               srcset="https://images.unsplash.com/photo-1589003077984-894e133dabab?auto=format&fit=crop&w=420&q=85 420w, https://images.unsplash.com/photo-1589003077984-894e133dabab?auto=format&fit=crop&w=840&q=88 840w, https://images.unsplash.com/photo-1589003077984-894e133dabab?auto=format&fit=crop&w=1200&q=90 1200w"
+               sizes="(max-width: 640px) 48vw, (max-width: 1024px) 31vw, 23vw"
+               loading="lazy"
+               decoding="async"
+               alt="Gaming earbuds product" />
+          <h4>Gaming Audio Gear</h4>
+          <p>Low Latency | RGB Case</p>
+          <span>From ₹1,599</span>
+        </article>
+        <article class="product-card">
+          <img src="https://images.unsplash.com/photo-1606220588913-b3aacb4d2f46?auto=format&fit=crop&w=1200&q=90"
+               srcset="https://images.unsplash.com/photo-1606220588913-b3aacb4d2f46?auto=format&fit=crop&w=420&q=85 420w, https://images.unsplash.com/photo-1606220588913-b3aacb4d2f46?auto=format&fit=crop&w=840&q=88 840w, https://images.unsplash.com/photo-1606220588913-b3aacb4d2f46?auto=format&fit=crop&w=1200&q=90 1200w"
+               sizes="(max-width: 640px) 48vw, (max-width: 1024px) 31vw, 23vw"
+               loading="lazy"
+               decoding="async"
+               alt="Smart band product" />
+          <h4>Smart Bands</h4>
+          <p>Fitness Tracking | Sleep Monitor</p>
+          <span>From ₹1,299</span>
+        </article>
+        <article class="product-card">
+          <img src="https://images.unsplash.com/photo-1572569511254-d8f925fe2cbb?auto=format&fit=crop&w=1200&q=90"
+               srcset="https://images.unsplash.com/photo-1572569511254-d8f925fe2cbb?auto=format&fit=crop&w=420&q=85 420w, https://images.unsplash.com/photo-1572569511254-d8f925fe2cbb?auto=format&fit=crop&w=840&q=88 840w, https://images.unsplash.com/photo-1572569511254-d8f925fe2cbb?auto=format&fit=crop&w=1200&q=90 1200w"
+               sizes="(max-width: 640px) 48vw, (max-width: 1024px) 31vw, 23vw"
+               loading="lazy"
+               decoding="async"
+               alt="Calling smartwatch product" />
+          <h4>Calling Smartwatches</h4>
+          <p>BT Calling | 1.9 inch Display</p>
+          <span>From ₹2,099</span>
+        </article>
+        <article class="product-card">
+          <img src="https://images.unsplash.com/photo-1545127398-14699f92334b?auto=format&fit=crop&w=1200&q=90"
+               srcset="https://images.unsplash.com/photo-1545127398-14699f92334b?auto=format&fit=crop&w=420&q=85 420w, https://images.unsplash.com/photo-1545127398-14699f92334b?auto=format&fit=crop&w=840&q=88 840w, https://images.unsplash.com/photo-1545127398-14699f92334b?auto=format&fit=crop&w=1200&q=90 1200w"
+               sizes="(max-width: 640px) 48vw, (max-width: 1024px) 31vw, 23vw"
+               loading="lazy"
+               decoding="async"
+               alt="ANC earbuds audio" />
+          <h4>ANC Earbuds Pro</h4>
+          <p>Noise cancel | Crystal calls</p>
+          <span>From ₹2,499</span>
+        </article>
+        <article class="product-card">
+          <img src="https://images.unsplash.com/photo-1608156639585-b3a032ef9689?auto=format&fit=crop&w=1200&q=90"
+               srcset="https://images.unsplash.com/photo-1608156639585-b3a032ef9689?auto=format&fit=crop&w=420&q=85 420w, https://images.unsplash.com/photo-1608156639585-b3a032ef9689?auto=format&fit=crop&w=840&q=88 840w, https://images.unsplash.com/photo-1608156639585-b3a032ef9689?auto=format&fit=crop&w=1200&q=90 1200w"
+               sizes="(max-width: 640px) 48vw, (max-width: 1024px) 31vw, 23vw"
+               loading="lazy"
+               decoding="async"
+               alt="Premium neckband product" />
+          <h4>Premium Neckbands X</h4>
+          <p>30hr backup | Mag-lock</p>
+          <span>From ₹1,399</span>
+        </article>
+        <article class="product-card">
+          <img src="https://images.unsplash.com/photo-1546435770-a3e426bf472b?auto=format&fit=crop&w=1200&q=90"
+               srcset="https://images.unsplash.com/photo-1546435770-a3e426bf472b?auto=format&fit=crop&w=420&q=85 420w, https://images.unsplash.com/photo-1546435770-a3e426bf472b?auto=format&fit=crop&w=840&q=88 840w, https://images.unsplash.com/photo-1546435770-a3e426bf472b?auto=format&fit=crop&w=1200&q=90 1200w"
+               sizes="(max-width: 640px) 48vw, (max-width: 1024px) 31vw, 23vw"
+               loading="lazy"
+               decoding="async"
+               alt="Sports earbuds collection" />
+          <h4>Sports Earbuds</h4>
+          <p>Sweat-resistant | Secure fit</p>
+          <span>From ₹1,899</span>
+        </article>
+        <article class="product-card">
+          <img src="https://images.unsplash.com/photo-1583394838336-acd977736f90?auto=format&fit=crop&w=1200&q=90"
+               srcset="https://images.unsplash.com/photo-1583394838336-acd977736f90?auto=format&fit=crop&w=420&q=85 420w, https://images.unsplash.com/photo-1583394838336-acd977736f90?auto=format&fit=crop&w=840&q=88 840w, https://images.unsplash.com/photo-1583394838336-acd977736f90?auto=format&fit=crop&w=1200&q=90 1200w"
+               sizes="(max-width: 640px) 48vw, (max-width: 1024px) 31vw, 23vw"
+               loading="lazy"
+               decoding="async"
+               alt="Studio headphones product" />
+          <h4>Studio Headphones</h4>
+          <p>Balanced sound profile</p>
+          <span>From ₹3,299</span>
+        </article>
+        <article class="product-card">
+          <img src="https://images.unsplash.com/photo-1545127398-14699f92334b?auto=format&fit=crop&w=1200&q=90"
+               srcset="https://images.unsplash.com/photo-1545127398-14699f92334b?auto=format&fit=crop&w=420&q=85 420w, https://images.unsplash.com/photo-1545127398-14699f92334b?auto=format&fit=crop&w=840&q=88 840w, https://images.unsplash.com/photo-1545127398-14699f92334b?auto=format&fit=crop&w=1200&q=90 1200w"
+               sizes="(max-width: 640px) 48vw, (max-width: 1024px) 31vw, 23vw"
+               loading="lazy"
+               decoding="async"
+               alt="Bass boost earbuds" />
+          <h4>Bass Boost Buds</h4>
+          <p>Heavy bass | Low latency</p>
+          <span>From ₹1,699</span>
+        </article>
+        <article class="product-card">
+          <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=1200&q=90"
+               srcset="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=420&q=85 420w, https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=840&q=88 840w, https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=1200&q=90 1200w"
+               sizes="(max-width: 640px) 48vw, (max-width: 1024px) 31vw, 23vw"
+               loading="lazy"
+               decoding="async"
+               alt="AMOLED watch premium" />
+          <h4>AMOLED Smartwatches</h4>
+          <p>Always-on display | GPS</p>
+          <span>From ₹2,799</span>
+        </article>
+        <article class="product-card">
+          <img src="https://images.unsplash.com/photo-1585298723682-7115561c51b7?auto=format&fit=crop&w=1200&q=90"
+               srcset="https://images.unsplash.com/photo-1585298723682-7115561c51b7?auto=format&fit=crop&w=420&q=85 420w, https://images.unsplash.com/photo-1585298723682-7115561c51b7?auto=format&fit=crop&w=840&q=88 840w, https://images.unsplash.com/photo-1585298723682-7115561c51b7?auto=format&fit=crop&w=1200&q=90 1200w"
+               sizes="(max-width: 640px) 48vw, (max-width: 1024px) 31vw, 23vw"
+               loading="lazy"
+               decoding="async"
+               alt="Party speaker product" />
+          <h4>Party Speakers Max</h4>
+          <p>RGB lights | Deep thump</p>
+          <span>From ₹2,499</span>
+        </article>
+        <article class="product-card">
+          <img src="https://images.unsplash.com/photo-1606220588913-b3aacb4d2f46?auto=format&fit=crop&w=1200&q=90"
+               srcset="https://images.unsplash.com/photo-1606220588913-b3aacb4d2f46?auto=format&fit=crop&w=420&q=85 420w, https://images.unsplash.com/photo-1606220588913-b3aacb4d2f46?auto=format&fit=crop&w=840&q=88 840w, https://images.unsplash.com/photo-1606220588913-b3aacb4d2f46?auto=format&fit=crop&w=1200&q=90 1200w"
+               sizes="(max-width: 640px) 48vw, (max-width: 1024px) 31vw, 23vw"
+               loading="lazy"
+               decoding="async"
+               alt="Fitness band plus" />
+          <h4>Fitness Bands Plus</h4>
+          <p>SpO2 | Heart rate monitor</p>
+          <span>From ₹1,499</span>
+        </article>
+      </div>
+    </section>
+
+    <section class="product-showcase" id="acc-products" data-category="accessories" aria-label="Accessory products">
+      <div class="section-head">
+        <h3>Accessories Corner</h3>
+        <a href="#">View All</a>
+      </div>
+      <div class="product-grid">
+        <article class="product-card">
+          <img src="https://images.unsplash.com/photo-1583863788434-e58a36330cf0?auto=format&fit=crop&w=1200&q=90"
+               srcset="https://images.unsplash.com/photo-1583863788434-e58a36330cf0?auto=format&fit=crop&w=420&q=85 420w, https://images.unsplash.com/photo-1583863788434-e58a36330cf0?auto=format&fit=crop&w=840&q=88 840w, https://images.unsplash.com/photo-1583863788434-e58a36330cf0?auto=format&fit=crop&w=1200&q=90 1200w"
+               sizes="(max-width: 640px) 48vw, (max-width: 1024px) 31vw, 23vw"
+               loading="lazy"
+               decoding="async"
+               alt="Fast charger product" />
+          <h4>Turbo Fast Chargers</h4>
+          <p>20W-100W Original</p>
+          <span>From ₹499</span>
+        </article>
+        <article class="product-card">
+          <img src="https://images.unsplash.com/photo-1616348436168-de43ad0db179?auto=format&fit=crop&w=1200&q=90"
+               srcset="https://images.unsplash.com/photo-1616348436168-de43ad0db179?auto=format&fit=crop&w=420&q=85 420w, https://images.unsplash.com/photo-1616348436168-de43ad0db179?auto=format&fit=crop&w=840&q=88 840w, https://images.unsplash.com/photo-1616348436168-de43ad0db179?auto=format&fit=crop&w=1200&q=90 1200w"
+               sizes="(max-width: 640px) 48vw, (max-width: 1024px) 31vw, 23vw"
+               loading="lazy"
+               decoding="async"
+               alt="Phone cover collection" />
+          <h4>Premium Covers</h4>
+          <p>Shockproof | Matte | Clear</p>
+          <span>From ₹199</span>
+        </article>
+        <article class="product-card">
+          <img src="https://images.unsplash.com/photo-1518717758536-85ae29035b6d?auto=format&fit=crop&w=1200&q=90"
+               srcset="https://images.unsplash.com/photo-1518717758536-85ae29035b6d?auto=format&fit=crop&w=420&q=85 420w, https://images.unsplash.com/photo-1518717758536-85ae29035b6d?auto=format&fit=crop&w=840&q=88 840w, https://images.unsplash.com/photo-1518717758536-85ae29035b6d?auto=format&fit=crop&w=1200&q=90 1200w"
+               sizes="(max-width: 640px) 48vw, (max-width: 1024px) 31vw, 23vw"
+               loading="lazy"
+               decoding="async"
+               alt="Power bank product" />
+          <h4>Power Banks</h4>
+          <p>10000mAh | 20000mAh</p>
+          <span>From ₹899</span>
+        </article>
+        <article class="product-card">
+          <img src="https://images.unsplash.com/photo-1587033411391-5d9e51cce126?auto=format&fit=crop&w=1200&q=90"
+               srcset="https://images.unsplash.com/photo-1587033411391-5d9e51cce126?auto=format&fit=crop&w=420&q=85 420w, https://images.unsplash.com/photo-1587033411391-5d9e51cce126?auto=format&fit=crop&w=840&q=88 840w, https://images.unsplash.com/photo-1587033411391-5d9e51cce126?auto=format&fit=crop&w=1200&q=90 1200w"
+               sizes="(max-width: 640px) 48vw, (max-width: 1024px) 31vw, 23vw"
+               loading="lazy"
+               decoding="async"
+               alt="Tempered glass pack" />
+          <h4>Tempered Glass Kits</h4>
+          <p>Edge-to-edge Protection</p>
+          <span>From ₹149</span>
+        </article>
+        <article class="product-card">
+          <img src="https://images.unsplash.com/photo-1601593346740-925612772716?auto=format&fit=crop&w=1200&q=90"
+               srcset="https://images.unsplash.com/photo-1601593346740-925612772716?auto=format&fit=crop&w=420&q=85 420w, https://images.unsplash.com/photo-1601593346740-925612772716?auto=format&fit=crop&w=840&q=88 840w, https://images.unsplash.com/photo-1601593346740-925612772716?auto=format&fit=crop&w=1200&q=90 1200w"
+               sizes="(max-width: 640px) 48vw, (max-width: 1024px) 31vw, 23vw"
+               loading="lazy"
+               decoding="async"
+               alt="Magnetic cable accessory" />
+          <h4>Premium USB Cables</h4>
+          <p>Braided | Fast Data Sync</p>
+          <span>From ₹249</span>
+        </article>
+        <article class="product-card">
+          <img src="https://images.unsplash.com/photo-1615526675159-e248c3021d3f?auto=format&fit=crop&w=1200&q=90"
+               srcset="https://images.unsplash.com/photo-1615526675159-e248c3021d3f?auto=format&fit=crop&w=420&q=85 420w, https://images.unsplash.com/photo-1615526675159-e248c3021d3f?auto=format&fit=crop&w=840&q=88 840w, https://images.unsplash.com/photo-1615526675159-e248c3021d3f?auto=format&fit=crop&w=1200&q=90 1200w"
+               sizes="(max-width: 640px) 48vw, (max-width: 1024px) 31vw, 23vw"
+               loading="lazy"
+               decoding="async"
+               alt="Wireless charger accessory" />
+          <h4>Wireless Charging Pads</h4>
+          <p>Qi Compatible | Safe Charge</p>
+          <span>From ₹799</span>
+        </article>
+        <article class="product-card">
+          <img src="https://images.unsplash.com/photo-1624050313119-2f6ccbf3d78d?auto=format&fit=crop&w=1200&q=90"
+               srcset="https://images.unsplash.com/photo-1624050313119-2f6ccbf3d78d?auto=format&fit=crop&w=420&q=85 420w, https://images.unsplash.com/photo-1624050313119-2f6ccbf3d78d?auto=format&fit=crop&w=840&q=88 840w, https://images.unsplash.com/photo-1624050313119-2f6ccbf3d78d?auto=format&fit=crop&w=1200&q=90 1200w"
+               sizes="(max-width: 640px) 48vw, (max-width: 1024px) 31vw, 23vw"
+               loading="lazy"
+               decoding="async"
+               alt="Car holder accessory" />
+          <h4>Car Mount Holders</h4>
+          <p>360 Rotation | Strong Grip</p>
+          <span>From ₹349</span>
+        </article>
+        <article class="product-card">
+          <img src="https://images.unsplash.com/photo-1625948515291-69613efd103f?auto=format&fit=crop&w=1200&q=90"
+               srcset="https://images.unsplash.com/photo-1625948515291-69613efd103f?auto=format&fit=crop&w=420&q=85 420w, https://images.unsplash.com/photo-1625948515291-69613efd103f?auto=format&fit=crop&w=840&q=88 840w, https://images.unsplash.com/photo-1625948515291-69613efd103f?auto=format&fit=crop&w=1200&q=90 1200w"
+               sizes="(max-width: 640px) 48vw, (max-width: 1024px) 31vw, 23vw"
+               loading="lazy"
+               decoding="async"
+               alt="Storage card accessory" />
+          <h4>Memory Cards</h4>
+          <p>64GB to 256GB options</p>
+          <span>From ₹599</span>
+        </article>
+        <article class="product-card">
+          <img src="https://images.unsplash.com/photo-1624050313119-2f6ccbf3d78d?auto=format&fit=crop&w=1200&q=90"
+               srcset="https://images.unsplash.com/photo-1624050313119-2f6ccbf3d78d?auto=format&fit=crop&w=420&q=85 420w, https://images.unsplash.com/photo-1624050313119-2f6ccbf3d78d?auto=format&fit=crop&w=840&q=88 840w, https://images.unsplash.com/photo-1624050313119-2f6ccbf3d78d?auto=format&fit=crop&w=1200&q=90 1200w"
+               sizes="(max-width: 640px) 48vw, (max-width: 1024px) 31vw, 23vw"
+               loading="lazy"
+               decoding="async"
+               alt="Magnetic car charger accessory" />
+          <h4>Magnetic Car Chargers</h4>
+          <p>Fast in-car charging setup</p>
+          <span>From ₹699</span>
+        </article>
+        <article class="product-card">
+          <img src="https://images.unsplash.com/photo-1601593346740-925612772716?auto=format&fit=crop&w=1200&q=90"
+               srcset="https://images.unsplash.com/photo-1601593346740-925612772716?auto=format&fit=crop&w=420&q=85 420w, https://images.unsplash.com/photo-1601593346740-925612772716?auto=format&fit=crop&w=840&q=88 840w, https://images.unsplash.com/photo-1601593346740-925612772716?auto=format&fit=crop&w=1200&q=90 1200w"
+               sizes="(max-width: 640px) 48vw, (max-width: 1024px) 31vw, 23vw"
+               loading="lazy"
+               decoding="async"
+               alt="Premium braided cables accessory" />
+          <h4>Braided Cable Pack</h4>
+          <p>USB-C + Lightning options</p>
+          <span>From ₹399</span>
+        </article>
+        <article class="product-card">
+          <img src="https://images.unsplash.com/photo-1615526675159-e248c3021d3f?auto=format&fit=crop&w=1200&q=90"
+               srcset="https://images.unsplash.com/photo-1615526675159-e248c3021d3f?auto=format&fit=crop&w=420&q=85 420w, https://images.unsplash.com/photo-1615526675159-e248c3021d3f?auto=format&fit=crop&w=840&q=88 840w, https://images.unsplash.com/photo-1615526675159-e248c3021d3f?auto=format&fit=crop&w=1200&q=90 1200w"
+               sizes="(max-width: 640px) 48vw, (max-width: 1024px) 31vw, 23vw"
+               loading="lazy"
+               decoding="async"
+               alt="Wireless dock accessory" />
+          <h4>Wireless Dock Stands</h4>
+          <p>Charge + stand combo</p>
+          <span>From ₹999</span>
+        </article>
+        <article class="product-card">
+          <img src="https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?auto=format&fit=crop&w=1200&q=90"
+               srcset="https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?auto=format&fit=crop&w=420&q=85 420w, https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?auto=format&fit=crop&w=840&q=88 840w, https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?auto=format&fit=crop&w=1200&q=90 1200w"
+               sizes="(max-width: 640px) 48vw, (max-width: 1024px) 31vw, 23vw"
+               loading="lazy"
+               decoding="async"
+               alt="Gaming trigger accessory" />
+          <h4>Mobile Gaming Triggers</h4>
+          <p>Faster response controls</p>
+          <span>From ₹449</span>
+        </article>
+        <article class="product-card">
+          <img src="https://images.unsplash.com/photo-1587033411391-5d9e51cce126?auto=format&fit=crop&w=1200&q=90"
+               srcset="https://images.unsplash.com/photo-1587033411391-5d9e51cce126?auto=format&fit=crop&w=420&q=85 420w, https://images.unsplash.com/photo-1587033411391-5d9e51cce126?auto=format&fit=crop&w=840&q=88 840w, https://images.unsplash.com/photo-1587033411391-5d9e51cce126?auto=format&fit=crop&w=1200&q=90 1200w"
+               sizes="(max-width: 640px) 48vw, (max-width: 1024px) 31vw, 23vw"
+               loading="lazy"
+               decoding="async"
+               alt="Camera lens protector accessory" />
+          <h4>Lens Protection Kits</h4>
+          <p>Rear camera safety set</p>
+          <span>From ₹249</span>
+        </article>
+        <article class="product-card">
+          <img src="https://images.unsplash.com/photo-1616348436168-de43ad0db179?auto=format&fit=crop&w=1200&q=90"
+               srcset="https://images.unsplash.com/photo-1616348436168-de43ad0db179?auto=format&fit=crop&w=420&q=85 420w, https://images.unsplash.com/photo-1616348436168-de43ad0db179?auto=format&fit=crop&w=840&q=88 840w, https://images.unsplash.com/photo-1616348436168-de43ad0db179?auto=format&fit=crop&w=1200&q=90 1200w"
+               sizes="(max-width: 640px) 48vw, (max-width: 1024px) 31vw, 23vw"
+               loading="lazy"
+               decoding="async"
+               alt="Designer case accessories" />
+          <h4>Designer Case Series</h4>
+          <p>Matte finish premium covers</p>
+          <span>From ₹299</span>
+        </article>
+        <article class="product-card">
+          <img src="https://images.unsplash.com/photo-1518717758536-85ae29035b6d?auto=format&fit=crop&w=1200&q=90"
+               srcset="https://images.unsplash.com/photo-1518717758536-85ae29035b6d?auto=format&fit=crop&w=420&q=85 420w, https://images.unsplash.com/photo-1518717758536-85ae29035b6d?auto=format&fit=crop&w=840&q=88 840w, https://images.unsplash.com/photo-1518717758536-85ae29035b6d?auto=format&fit=crop&w=1200&q=90 1200w"
+               sizes="(max-width: 640px) 48vw, (max-width: 1024px) 31vw, 23vw"
+               loading="lazy"
+               decoding="async"
+               alt="High capacity power bank accessory" />
+          <h4>High-Capacity Banks</h4>
+          <p>20,000mAh fast charging</p>
+          <span>From ₹1,199</span>
+        </article>
+        <article class="product-card">
+          <img src="https://images.unsplash.com/photo-1583863788434-e58a36330cf0?auto=format&fit=crop&w=1200&q=90"
+               srcset="https://images.unsplash.com/photo-1583863788434-e58a36330cf0?auto=format&fit=crop&w=420&q=85 420w, https://images.unsplash.com/photo-1583863788434-e58a36330cf0?auto=format&fit=crop&w=840&q=88 840w, https://images.unsplash.com/photo-1583863788434-e58a36330cf0?auto=format&fit=crop&w=1200&q=90 1200w"
+               sizes="(max-width: 640px) 48vw, (max-width: 1024px) 31vw, 23vw"
+               loading="lazy"
+               decoding="async"
+               alt="GaN fast charger accessory" />
+          <h4>GaN Fast Chargers</h4>
+          <p>Compact high power bricks</p>
+          <span>From ₹1,099</span>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <script src="products-catalog.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

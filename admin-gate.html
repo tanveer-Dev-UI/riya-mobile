@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Access Gate</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="admin-gate-page">
+    <section class="admin-gate-card">
+      <p class="gate-tag">Admin Secure Access</p>
+      <h1>Continue with authorized Gmail</h1>
+      <p class="gate-text">
+        Sirf approved Gmail account se verification ke baad hi admin login page open hoga.
+      </p>
+
+      <div id="googleLoginWrap" class="google-wrap"></div>
+      <p class="gate-note" id="gateStatusNote">Google verification required.</p>
+
+      <div class="gate-actions">
+        <a href="/">Open Website</a>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="admin-gate.js"></script>
+</body>
+</html>
