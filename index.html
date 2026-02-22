@@ -182,6 +182,14 @@
         <button type="button" class="pill" data-filter="audio">Audio</button>
         <button type="button" class="pill" data-filter="accessories">Accessories</button>
       </div>
+      <div class="company-categories" aria-label="Company categories">
+        <p class="company-categories-title">Company Categories</p>
+        <div class="company-pills" id="companyPills">
+          <button type="button" class="company-card active" data-brand="all">
+            <span class="company-name-lg">All Companies</span>
+          </button>
+        </div>
+      </div>
       <div class="advanced-filters">
         <label>
           <span>Brand</span>
@@ -976,48 +984,6 @@
       </div>
     </section>
   </main>
-
-  <button type="button" class="admin-open-btn" id="openAdminPanel">Admin</button>
-
-  <aside class="admin-panel" id="adminPanel" aria-hidden="true">
-    <div class="admin-head">
-      <h3>Quick Admin</h3>
-      <button type="button" id="closeAdminPanel" aria-label="Close admin panel">×</button>
-    </div>
-    <div class="admin-body">
-      <label class="admin-field">
-        <span>Search Product</span>
-        <input type="search" id="adminSearchInput" placeholder="Type product name..." />
-      </label>
-
-      <label class="admin-field">
-        <span>Select Product</span>
-        <select id="adminProductSelect"></select>
-      </label>
-
-      <label class="admin-field">
-        <span>Price</span>
-        <input type="text" id="adminPriceInput" placeholder="₹00,000" />
-      </label>
-
-      <label class="admin-field">
-        <span>Offer Text</span>
-        <input type="text" id="adminOfferInput" placeholder="Eg: 10% Off + Free Cover" />
-      </label>
-
-      <label class="admin-check">
-        <input type="checkbox" id="adminUnavailableInput" />
-        <span>Mark as Unavailable</span>
-      </label>
-
-      <div class="admin-actions">
-        <button type="button" id="saveAdminChanges">Save</button>
-        <button type="button" id="resetAdminChanges">Reset</button>
-      </div>
-
-      <p class="admin-note" id="adminStatusNote">Changes save in this browser and reflect instantly.</p>
-    </div>
-  </aside>
 
   <script src="products-catalog.js"></script>
   <script src="script.js"></script>

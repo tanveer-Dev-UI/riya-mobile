@@ -24,15 +24,17 @@ app.get("/", (req, res) => {
 });
 
 app.get("/admin", (req, res) => {
-  res.redirect("/");
+  if (isAuthenticated(req)) return res.redirect("/admin.html");
+  res.sendFile(path.join(__dirname, "admin-login.html"));
 });
 
 app.get("/admin.html", (req, res) => {
-  res.redirect("/");
+  if (!isAuthenticated(req)) return res.redirect("/admin");
+  res.sendFile(path.join(__dirname, "admin.html"));
 });
 
 app.get("/admin.hmtl", (req, res) => {
-  res.redirect("/");
+  res.redirect("/admin");
 });
 
 app.use(express.static(__dirname));
@@ -49,6 +51,20 @@ function parseCookies(req) {
         return [part.slice(0, i), decodeURIComponent(part.slice(i + 1))];
       })
   );
+}
+
+function isAuthenticated(req) {
+  const cookies = parseCookies(req);
+  const token = cookies.admin_session;
+  if (!token) return false;
+  const session = sessions.get(token);
+  if (!session) return false;
+  if (Date.now() > session.expiresAt) {
+    sessions.delete(token);
+    return false;
+  }
+  session.expiresAt = Date.now() + SESSION_TTL_MS;
+  return true;
 }
 
 function createSession(res, userId) {

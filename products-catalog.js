@@ -61,3 +61,100 @@
   ]
 };
 
+function enrichCatalogData(catalog) {
+  const source = catalog && typeof catalog === "object" ? catalog : {};
+  const categoryDefaults = {
+    deals: ["Limited-period value pricing", "Extra savings with card and exchange", "Quick delivery and easy returns"],
+    mobiles: ["Optimized for smooth daily multitasking", "Strong battery and all-day reliability", "Secure apps and regular software support"],
+    audio: ["Clear sound profile with stable connection", "Good comfort for long listening", "Ready for calls, streaming, and gaming"],
+    accessories: ["Durable build quality for daily use", "Easy setup with wide compatibility", "Lightweight and travel friendly"]
+  };
+
+  function parsePrice(priceText) {
+    const digits = String(priceText || "").replace(/,/g, "").match(/\d+/g);
+    return digits ? Number(digits.join("")) : 0;
+  }
+
+  function getDetailParts(detailText) {
+    return String(detailText || "")
+      .split("|")
+      .map((part) => part.trim())
+      .filter(Boolean);
+  }
+
+  function toSpecRows(specs) {
+    if (Array.isArray(specs)) return specs;
+    if (specs && typeof specs === "object") return Object.entries(specs);
+    return [];
+  }
+
+  const allProducts = Object.entries(source).flatMap(([category, items]) =>
+    (items || []).map((item, index) => ({ ...item, category, index }))
+  );
+
+  const enriched = {};
+
+  Object.entries(source).forEach(([category, items]) => {
+    const categoryItems = Array.isArray(items) ? items : [];
+
+    enriched[category] = categoryItems.map((item) => {
+      const priceValue = parsePrice(item.price);
+      const detailParts = getDetailParts(item.detail);
+      const brandPool = allProducts
+        .filter((p) => p.brand === item.brand && p.image && p.image !== item.image)
+        .map((p) => p.image);
+      const categoryPool = categoryItems
+        .filter((p) => p.image && p.image !== item.image)
+        .map((p) => p.image);
+
+      const mergedImages = [item.image, ...brandPool, ...categoryPool].filter(Boolean);
+      const uniqueImages = [];
+      mergedImages.forEach((img) => {
+        if (!uniqueImages.includes(img)) uniqueImages.push(img);
+      });
+      const images = uniqueImages.slice(0, 5);
+
+      const description = item.description || `${item.name} offers ${item.detail}. Built for dependable performance, smooth user experience, and day-to-day comfort with trusted ${item.brand || "brand"} quality.`;
+      const highlights = Array.isArray(item.highlights) && item.highlights.length > 0
+        ? item.highlights.slice(0, 6)
+        : [...detailParts, ...(categoryDefaults[category] || categoryDefaults.mobiles), priceValue > 50000 ? "Premium segment finish and performance" : "Excellent value-for-money choice"].slice(0, 6);
+
+      const specs = toSpecRows(item.specs).length > 0
+        ? item.specs
+        : {
+          Brand: item.brand || "Generic",
+          Category: category.charAt(0).toUpperCase() + category.slice(1),
+          Model: item.name || "N/A",
+          Variant: detailParts[0] || "Standard",
+          Feature: detailParts[1] || "Optimized for everyday use",
+          Price: item.price || "N/A",
+          Availability: item.unavailable ? "Currently Unavailable" : "In Stock",
+          Warranty: "1 Year Seller Warranty"
+        };
+
+      const offers = Array.isArray(item.offers) && item.offers.length > 0
+        ? item.offers.slice(0, 5)
+        : [
+          item.offer || "Bank offer available on eligible cards",
+          "No-cost EMI options on major cards",
+          "Exchange bonus available on selected devices",
+          "Extra discount on combo purchase"
+        ].filter(Boolean).slice(0, 5);
+
+      return {
+        ...item,
+        description,
+        highlights,
+        specs,
+        offers,
+        images: images.length > 0 ? images : (item.image ? [item.image] : [])
+      };
+    });
+  });
+
+  return enriched;
+}
+
+window.enrichCatalogData = enrichCatalogData;
+window.PRODUCT_CATALOG = enrichCatalogData(window.PRODUCT_CATALOG);
+

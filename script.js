@@ -196,24 +196,37 @@ async function loadServerCatalog() {
     if (!response.ok) return;
     const data = await response.json();
     if (!data || typeof data !== "object") return;
-    productData = data;
+    const maybeEnrich = typeof window.enrichCatalogData === "function" ? window.enrichCatalogData : null;
+    productData = maybeEnrich ? maybeEnrich(data) : data;
     ensureBasePrice();
     applyAdminOverrides();
     renderProducts();
     window.__refreshProductFilters?.();
-    window.__refreshAdminPanel?.();
   } catch {
     // fallback to bundled catalog
   }
 }
 
 loadServerCatalog();
+document.querySelectorAll(".product-showcase").forEach((section) => {
+  section.addEventListener("click", (event) => {
+    const target = event.target;
+    if (!(target instanceof Element)) return;
+    const card = target.closest(".product-card");
+    if (!(card instanceof HTMLElement)) return;
+    if (card.classList.contains("is-hidden")) return;
+    const id = card.dataset.id;
+    if (!id) return;
+    window.location.href = `product.html?id=${encodeURIComponent(id)}`;
+  });
+});
 
 const filterPills = document.getElementById("filterPills");
 const filterNote = document.getElementById("filterNote");
 const searchForm = document.getElementById("productSearch");
 const searchInput = document.getElementById("globalSearch");
 const brandFilter = document.getElementById("brandFilter");
+const companyPills = document.getElementById("companyPills");
 const priceFilter = document.getElementById("priceFilter");
 const sortFilter = document.getElementById("sortFilter");
 const clearFiltersBtn = document.getElementById("clearFilters");
@@ -226,14 +239,68 @@ if (filterPills && searchInput && showcaseSections.length > 0) {
   let activePrice = "all";
   let activeSort = "default";
 
+
   function inPriceRange(price, range) {
     if (range === "all") return true;
     const [min, max] = range.split("-").map(Number);
     return price >= min && price <= max;
   }
 
+  function renderBrandPills(brands) {
+    if (!companyPills) return;
+    companyPills.innerHTML = "";
+
+    const allBtn = document.createElement("button");
+    allBtn.type = "button";
+    allBtn.className = "company-card";
+    allBtn.dataset.brand = "all";
+    allBtn.innerHTML = `
+      <span class="company-name-lg">All Companies</span>
+    `;
+    companyPills.appendChild(allBtn);
+
+    brands.forEach((brand) => {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "company-card";
+      btn.dataset.brand = brand;
+      btn.innerHTML = `
+        <span class="company-name-lg">${brand}</span>
+      `;
+      companyPills.appendChild(btn);
+    });
+
+    companyPills.querySelectorAll(".company-card").forEach((pill) => {
+      pill.classList.toggle("active", (pill.dataset.brand || "all") === activeBrand);
+    });
+  }
+
+  function renderBrandSelect(brands) {
+    if (!brandFilter) return;
+
+    const previousBrand = activeBrand;
+    brandFilter.innerHTML = "";
+
+    const allOption = document.createElement("option");
+    allOption.value = "all";
+    allOption.textContent = "All Brands";
+    brandFilter.appendChild(allOption);
+
+    brands.forEach((brand) => {
+      const option = document.createElement("option");
+      option.value = brand;
+      option.textContent = brand;
+      brandFilter.appendChild(option);
+    });
+
+    activeBrand = brands.includes(previousBrand) ? previousBrand : "all";
+    brandFilter.value = activeBrand;
+  }
+
   function refreshCardMetadata() {
-    showcaseSections.forEach((section) => {
+    const brandSet = new Set();
+
+    document.querySelectorAll(".product-showcase").forEach((section) => {
       section.querySelectorAll(".product-card").forEach((card) => {
         const title = card.querySelector("h4")?.textContent || "";
         const desc = card.querySelector("p")?.textContent || "";
@@ -241,13 +308,20 @@ if (filterPills && searchInput && showcaseSections.length > 0) {
         const fallbackPriceText = card.dataset.basePrice || "";
         const effectivePriceText = /unavailable/i.test(priceText) ? fallbackPriceText : priceText;
         const offerText = card.querySelector(".offer-line")?.textContent || "";
+        const brandText = card.querySelector(".brand-chip")?.textContent?.trim() || "";
+        const detectedBrand = brandText || detectBrand(title);
 
         card.dataset.search = `${title} ${desc} ${offerText} ${effectivePriceText}`.toLowerCase();
         card.dataset.price = String(extractPrice(effectivePriceText));
-        card.dataset.brand = detectBrand(title);
+        card.dataset.brand = detectedBrand;
         card.dataset.title = title.toLowerCase();
+        if (detectedBrand) brandSet.add(detectedBrand);
       });
     });
+
+    const brands = Array.from(brandSet).sort((a, b) => a.localeCompare(b));
+    renderBrandSelect(brands);
+    renderBrandPills(brands);
   }
   window.__refreshProductFilters = () => {
     refreshCardMetadata();
@@ -258,7 +332,7 @@ if (filterPills && searchInput && showcaseSections.length > 0) {
     const q = query.toLowerCase().trim();
     let visibleCards = 0;
 
-    showcaseSections.forEach((section) => {
+    document.querySelectorAll(".product-showcase").forEach((section) => {
       const sectionCategory = section.dataset.category || "";
       const cards = Array.from(section.querySelectorAll(".product-card"));
       const sectionAllowed = activeFilter === "all" || sectionCategory === activeFilter;
@@ -319,6 +393,30 @@ if (filterPills && searchInput && showcaseSections.length > 0) {
 
   brandFilter?.addEventListener("change", () => {
     activeBrand = brandFilter.value;
+    companyPills?.querySelectorAll(".company-card").forEach((pill) => {
+      pill.classList.toggle("active", (pill.dataset.brand || "all") === activeBrand);
+    });
+    applyFilters();
+  });
+
+  companyPills?.addEventListener("click", (event) => {
+    const target = event.target;
+    if (!(target instanceof Element)) return;
+    const cardButton = target.closest(".company-card");
+    if (!(cardButton instanceof HTMLButtonElement)) return;
+
+    const selectedBrand = cardButton.dataset.brand;
+    if (!selectedBrand) return;
+
+    activeBrand = selectedBrand;
+    activeFilter = "all";
+    if (brandFilter) brandFilter.value = activeBrand;
+    filterPills.querySelectorAll(".pill").forEach((pill) => {
+      pill.classList.toggle("active", pill.dataset.filter === "all");
+    });
+    companyPills.querySelectorAll(".company-card").forEach((pill) => {
+      pill.classList.toggle("active", pill === cardButton);
+    });
     applyFilters();
   });
 
@@ -340,6 +438,9 @@ if (filterPills && searchInput && showcaseSections.length > 0) {
     query = "";
     searchInput.value = "";
     if (brandFilter) brandFilter.value = "all";
+    companyPills?.querySelectorAll(".company-card").forEach((pill) => {
+      pill.classList.toggle("active", (pill.dataset.brand || "all") === "all");
+    });
     if (priceFilter) priceFilter.value = "all";
     if (sortFilter) sortFilter.value = "default";
     filterPills.querySelectorAll(".pill").forEach((pill) => {
@@ -362,161 +463,4 @@ if (filterPills && searchInput && showcaseSections.length > 0) {
   applyFilters();
 }
 
-const openAdminPanelBtn = document.getElementById("openAdminPanel");
-const closeAdminPanelBtn = document.getElementById("closeAdminPanel");
-const adminPanel = document.getElementById("adminPanel");
-const adminSearchInput = document.getElementById("adminSearchInput");
-const adminProductSelect = document.getElementById("adminProductSelect");
-const adminPriceInput = document.getElementById("adminPriceInput");
-const adminOfferInput = document.getElementById("adminOfferInput");
-const adminUnavailableInput = document.getElementById("adminUnavailableInput");
-const saveAdminChangesBtn = document.getElementById("saveAdminChanges");
-const resetAdminChangesBtn = document.getElementById("resetAdminChanges");
-const adminStatusNote = document.getElementById("adminStatusNote");
 
-if (
-  openAdminPanelBtn &&
-  closeAdminPanelBtn &&
-  adminPanel &&
-  adminSearchInput &&
-  adminProductSelect &&
-  adminPriceInput &&
-  adminOfferInput &&
-  adminUnavailableInput &&
-  saveAdminChangesBtn &&
-  resetAdminChangesBtn &&
-  adminStatusNote
-) {
-  let currentList = [];
-
-  function getFlatProducts() {
-    return Object.entries(productData).flatMap(([category, items]) =>
-      (items || []).map((item, index) => ({
-        id: `${category}-${index + 1}`,
-        category,
-        name: item.name || "Untitled",
-        brand: item.brand || "",
-        price: item.price || "",
-        basePrice: item.basePrice || item.price || "",
-        offer: item.offer || "",
-        unavailable: Boolean(item.unavailable)
-      }))
-    );
-  }
-
-  function setAdminStatus(text) {
-    adminStatusNote.textContent = text;
-  }
-
-  function toggleAdminPanel(show) {
-    adminPanel.classList.toggle("open", show);
-    adminPanel.setAttribute("aria-hidden", String(!show));
-  }
-
-  function renderAdminOptions() {
-    const q = adminSearchInput.value.toLowerCase().trim();
-    currentList = getFlatProducts().filter((item) =>
-      q === "" || `${item.name} ${item.brand} ${item.category}`.toLowerCase().includes(q)
-    );
-
-    adminProductSelect.innerHTML = currentList.length
-      ? currentList.map((item) => `<option value="${item.id}">${item.name} (${item.category})</option>`).join("")
-      : '<option value="">No product found</option>';
-  }
-
-  function fillAdminForm() {
-    const selectedId = adminProductSelect.value;
-    if (!selectedId) return;
-    const item = getFlatProducts().find((p) => p.id === selectedId);
-    if (!item) return;
-    adminPriceInput.value = item.price;
-    adminOfferInput.value = item.offer;
-    adminUnavailableInput.checked = item.unavailable;
-  }
-
-  function refreshAdminPanel() {
-    const activeId = adminProductSelect.value;
-    renderAdminOptions();
-    if (activeId && adminProductSelect.querySelector(`option[value="${activeId}"]`)) {
-      adminProductSelect.value = activeId;
-    }
-    fillAdminForm();
-  }
-  window.__refreshAdminPanel = refreshAdminPanel;
-
-  function updateOverride(id, patch) {
-    const overrides = loadAdminOverrides();
-    overrides[id] = { ...(overrides[id] || {}), ...patch };
-    saveAdminOverrides(overrides);
-  }
-
-  function applyPatchToProduct(id, patch) {
-    const found = getItemById(id);
-    if (!found) return false;
-    const { item } = found;
-    if (typeof patch.price === "string" && patch.price.trim()) item.price = patch.price.trim();
-    if (typeof patch.offer === "string") item.offer = patch.offer.trim();
-    if (typeof patch.unavailable === "boolean") item.unavailable = patch.unavailable;
-    return true;
-  }
-
-  function saveCurrentProduct() {
-    const id = adminProductSelect.value;
-    if (!id) return;
-    const patch = {
-      price: adminPriceInput.value.trim(),
-      offer: adminOfferInput.value.trim(),
-      unavailable: Boolean(adminUnavailableInput.checked)
-    };
-    const ok = applyPatchToProduct(id, patch);
-    if (!ok) {
-      setAdminStatus("Product update failed.");
-      return;
-    }
-    updateOverride(id, patch);
-    renderProducts();
-    window.__refreshProductFilters?.();
-    refreshAdminPanel();
-    setAdminStatus("Saved. Product card updated.");
-  }
-
-  function resetCurrentProduct() {
-    const id = adminProductSelect.value;
-    if (!id) return;
-    const found = getItemById(id);
-    if (!found) return;
-    const { item } = found;
-    const patch = {
-      price: item.basePrice || item.price,
-      offer: "",
-      unavailable: false
-    };
-    applyPatchToProduct(id, patch);
-    updateOverride(id, patch);
-    renderProducts();
-    window.__refreshProductFilters?.();
-    refreshAdminPanel();
-    setAdminStatus("Reset done.");
-  }
-
-  openAdminPanelBtn.addEventListener("click", () => {
-    refreshAdminPanel();
-    toggleAdminPanel(true);
-  });
-
-  closeAdminPanelBtn.addEventListener("click", () => {
-    toggleAdminPanel(false);
-  });
-
-  adminSearchInput.addEventListener("input", () => {
-    renderAdminOptions();
-    fillAdminForm();
-  });
-
-  adminProductSelect.addEventListener("change", fillAdminForm);
-  saveAdminChangesBtn.addEventListener("click", saveCurrentProduct);
-  resetAdminChangesBtn.addEventListener("click", resetCurrentProduct);
-
-  renderAdminOptions();
-  fillAdminForm();
-}

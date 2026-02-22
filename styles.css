@@ -422,6 +422,70 @@ body {
   font-size: 0.82rem;
 }
 
+.company-categories {
+  margin-top: 10px;
+}
+
+.company-categories-title {
+  margin: 0 0 6px;
+  font-size: 0.74rem;
+  font-weight: 800;
+  color: #556173;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.company-pills {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding: 4px 2px 12px;
+  scroll-snap-type: x proximity;
+  -webkit-overflow-scrolling: touch;
+}
+
+.company-card {
+  flex: 0 0 146px;
+  min-width: 146px;
+  border: 1px solid #d6e4ff;
+  background: linear-gradient(160deg, #ffffff, #f5f9ff);
+  color: #16315f;
+  border-radius: 14px;
+  padding: 18px 12px;
+  display: grid;
+  place-items: center;
+  gap: 0;
+  min-height: 108px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  scroll-snap-align: start;
+  box-shadow: 0 8px 18px rgba(31, 93, 194, 0.08);
+}
+
+.company-name-lg {
+  font-size: 1.18rem;
+  line-height: 1.05;
+  font-weight: 900;
+  text-align: center;
+  letter-spacing: 0.03em;
+  width: 100%;
+  word-break: break-word;
+  text-transform: uppercase;
+}
+
+.company-card:hover {
+  transform: translateY(-2px);
+  border-color: #a9c4ff;
+  box-shadow: 0 12px 22px rgba(21, 52, 104, 0.16);
+}
+
+.company-card.active {
+  background: linear-gradient(160deg, #153468, #1f4a94);
+  border-color: #153468;
+  color: #ffffff;
+  box-shadow: 0 14px 24px rgba(10, 29, 62, 0.3);
+}
+
 .advanced-filters {
   margin-top: 10px;
   display: grid;
@@ -589,6 +653,10 @@ body {
 
 .product-card.is-hidden {
   display: none;
+}
+
+.product-card {
+  cursor: pointer;
 }
 
 .admin-panel {
@@ -1045,3 +1113,4 @@ body {
     grid-template-columns: 1fr;
   }
 }
+

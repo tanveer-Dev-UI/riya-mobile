@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Product Details | Riya Mobile Shop</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="product-detail.css" />
+</head>
+<body class="product-page">
+  <header class="pd-topbar">
+    <div class="pd-topbar-inner">
+      <a class="pd-home-link" href="index.html">← Back to Store</a>
+      <h1>Riya Mobile Shop</h1>
+      <a class="pd-home-link pd-home-link-right" href="index.html#mobiles-products">Continue Shopping</a>
+    </div>
+  </header>
+
+  <main class="pd-main" id="productPageRoot">
+    <section class="pd-shell hidden" id="pdShell">
+      <div class="pd-gallery">
+        <img id="pdMainImage" src="" alt="Product image" />
+        <div class="pd-thumbs" id="pdThumbs"></div>
+      </div>
+
+      <div class="pd-info">
+        <p class="pd-brand" id="pdBrand"></p>
+        <h2 id="pdName"></h2>
+        <p class="pd-rating">4.4 ★ | 4,382 ratings & 321 reviews</p>
+        <p class="pd-description" id="pdDescription"></p>
+        <p class="pd-price" id="pdPrice"></p>
+        <p class="pd-subprice" id="pdSubprice"></p>
+        <p class="pd-offer" id="pdOffer"></p>
+
+        <div class="pd-card">
+          <h3>Available Offers</h3>
+          <ul id="pdOfferList"></ul>
+        </div>
+
+        <div class="pd-card">
+          <h3>Highlights</h3>
+          <ul id="pdHighlights"></ul>
+        </div>
+
+        <div class="pd-card">
+          <h3>Specifications</h3>
+          <div class="pd-specs" id="pdSpecs"></div>
+        </div>
+
+        <div class="pd-actions">
+          <button type="button" class="pd-btn pd-btn-cart">Add to Cart</button>
+          <button type="button" class="pd-btn pd-btn-buy">Buy Now</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="pd-reco hidden" id="pdSimilarWrap">
+      <div class="pd-section-head">
+        <h3>Similar Products</h3>
+        <a href="index.html#mobiles-products">View all</a>
+      </div>
+      <div class="pd-grid" id="pdSimilar"></div>
+    </section>
+
+    <section class="pd-reco hidden" id="pdYouMayWrap">
+      <div class="pd-section-head">
+        <h3>You May Also Like</h3>
+        <a href="index.html#deals-products">More picks</a>
+      </div>
+      <div class="pd-grid" id="pdYouMay"></div>
+    </section>
+
+    <section class="pd-empty hidden" id="pdEmpty">
+      <h2>Product not found</h2>
+      <p>Try opening this page from a product card in the main shop.</p>
+      <a href="index.html">Go to Home</a>
+    </section>
+  </main>
+
+  <script src="products-catalog.js"></script>
+  <script src="product-detail.js"></script>
+</body>
+</html>
