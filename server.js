@@ -23,18 +23,19 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });
 
-// Direct admin panel route as requested.
 app.get("/admin", (req, res) => {
-  res.sendFile(path.join(__dirname, "admin-panel.html"));
+  res.sendFile(path.join(__dirname, "admin.html"));
 });
 
 app.get("/admin/panel", (req, res) => {
-  res.redirect("/admin");
+  if (!hasValidSession(req)) {
+    return res.redirect("/admin");
+  }
+  return res.sendFile(path.join(__dirname, "admin-panel.html"));
 });
 
-// Optional login page still available if needed later.
 app.get("/admin/login", (req, res) => {
-  res.sendFile(path.join(__dirname, "admin.html"));
+  res.redirect("/admin");
 });
 
 app.get("/admin.html", (req, res) => {
@@ -78,6 +79,10 @@ function getSessionFromReq(req) {
   return { token, session };
 }
 
+function hasValidSession(req) {
+  return Boolean(getSessionFromReq(req));
+}
+
 function createSession(res, userId) {
   const token = crypto.randomBytes(32).toString("hex");
   sessions.set(token, { userId, expiresAt: Date.now() + SESSION_TTL_MS });
@@ -91,6 +96,14 @@ function clearSession(req, res) {
   const cookies = parseCookies(req);
   if (cookies.admin_session) sessions.delete(cookies.admin_session);
   res.append("Set-Cookie", "admin_session=; HttpOnly; SameSite=Strict; Path=/; Max-Age=0");
+}
+
+function authMiddleware(req, res, next) {
+  const sessionData = getSessionFromReq(req);
+  if (!sessionData) return res.status(401).json({ error: "Unauthorized" });
+
+  req.adminUser = sessionData.session.userId;
+  return next();
 }
 
 function flattenProducts(grouped) {
@@ -116,9 +129,9 @@ async function writeProducts(data) {
 app.get("/api/products", async (req, res) => {
   try {
     const products = await readProducts();
-    res.json(products);
+    return res.json(products);
   } catch {
-    res.status(500).json({ error: "Failed to load products" });
+    return res.status(500).json({ error: "Failed to load products" });
   }
 });
 
@@ -126,6 +139,7 @@ app.post("/api/admin/login", (req, res) => {
   const userId = String(req.body?.userId || "").trim();
   const password = String(req.body?.password || "").trim();
   const passOk = password === ADMIN_PASS || password === LEGACY_ADMIN_PASS;
+
   if (userId !== ADMIN_USER || !passOk) {
     return res.status(401).json({ error: "Invalid credentials" });
   }
@@ -136,25 +150,24 @@ app.post("/api/admin/login", (req, res) => {
 
 app.post("/api/admin/logout", (req, res) => {
   clearSession(req, res);
-  res.json({ ok: true });
+  return res.json({ ok: true });
 });
 
 app.get("/api/admin/session", (req, res) => {
   const sessionData = getSessionFromReq(req);
-  res.json({ authenticated: Boolean(sessionData) });
+  return res.json({ authenticated: Boolean(sessionData) });
 });
 
-// Keep admin product APIs open so /admin works instantly without login.
-app.get("/api/admin/products", async (req, res) => {
+app.get("/api/admin/products", authMiddleware, async (req, res) => {
   try {
     const grouped = await readProducts();
-    res.json({ products: flattenProducts(grouped) });
+    return res.json({ products: flattenProducts(grouped) });
   } catch {
-    res.status(500).json({ error: "Failed to load products" });
+    return res.status(500).json({ error: "Failed to load products" });
   }
 });
 
-app.patch("/api/admin/products/:id", async (req, res) => {
+app.patch("/api/admin/products/:id", authMiddleware, async (req, res) => {
   try {
     const { id } = req.params;
     const [category, indexPart] = id.split("-");
@@ -177,9 +190,9 @@ app.patch("/api/admin/products/:id", async (req, res) => {
     if (!item.basePrice) item.basePrice = item.price;
 
     await writeProducts(grouped);
-    res.json({ ok: true, product: item });
+    return res.json({ ok: true, product: item });
   } catch {
-    res.status(500).json({ error: "Failed to update product" });
+    return res.status(500).json({ error: "Failed to update product" });
   }
 });
 

@@ -117,9 +117,12 @@
     {
       "name": "Apple iPhone 15",
       "detail": "128GB | Dynamic Island",
-      "price": "₹69,900",
+      "price": "₹50000",
       "brand": "Apple",
-      "image": "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=1200&q=90"
+      "image": "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=1200&q=90",
+      "offer": "",
+      "unavailable": false,
+      "basePrice": "₹50000"
     },
     {
       "name": "Apple iPhone 15 Plus",

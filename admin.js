@@ -7,6 +7,11 @@
   return response;
 }
 
+const loginForm = document.getElementById("adminLoginForm");
+const userInput = document.getElementById("adminUserId");
+const passInput = document.getElementById("adminPassword");
+const loginStatus = document.getElementById("adminLoginStatus");
+
 const adminSearchInput = document.getElementById("adminSearchInput");
 const adminProductSuggestions = document.getElementById("adminProductSuggestions");
 const adminProductSelect = document.getElementById("adminProductSelect");
@@ -33,6 +38,8 @@ const adminPreviewImage = document.getElementById("adminPreviewImage");
 let allProducts = [];
 let visibleProducts = [];
 
+const isLoginPage = Boolean(loginForm);
+const isPanelPage = Boolean(adminProductSelect);
 const IMAGE_FALLBACK = "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=900&q=80";
 
 function expandProductSelect() {
@@ -191,26 +198,16 @@ function applySearchSelection() {
   fillForm();
 }
 
-function flattenGroupedProducts(grouped) {
-  return Object.entries(grouped || {}).flatMap(([category, items]) =>
-    (items || []).map((item, index) => ({ id: `${category}-${index + 1}`, category, ...item }))
-  );
-}
-
 async function loadProducts() {
-  let list = [];
-
-  const adminRes = await api("/api/admin/products");
-  if (adminRes.ok) {
-    const data = await adminRes.json();
-    list = Array.isArray(data.products) ? data.products : [];
-  } else {
-    const publicRes = await api("/api/products");
-    if (!publicRes.ok) throw new Error("Failed to load products");
-    const grouped = await publicRes.json();
-    list = flattenGroupedProducts(grouped);
+  const res = await api("/api/admin/products");
+  if (res.status === 401) {
+    window.location.href = "/admin";
+    throw new Error("Unauthorized");
   }
+  if (!res.ok) throw new Error("Failed to load products");
 
+  const data = await res.json();
+  const list = Array.isArray(data.products) ? data.products : [];
   allProducts = list.sort((a, b) => {
     const cat = String(a.category).localeCompare(String(b.category));
     if (cat !== 0) return cat;
@@ -237,6 +234,11 @@ async function saveCurrent() {
     })
   });
 
+  if (res.status === 401) {
+    window.location.href = "/admin";
+    throw new Error("Unauthorized");
+  }
+
   if (!res.ok) throw new Error("Save failed");
   setStatus("Saved successfully.");
   await loadProducts();
@@ -247,7 +249,57 @@ function resetCurrent() {
   setStatus("Reverted unsaved changes.");
 }
 
+async function checkSession() {
+  try {
+    const res = await api("/api/admin/session");
+    if (!res.ok) return false;
+    const data = await res.json();
+    return Boolean(data?.authenticated);
+  } catch {
+    return false;
+  }
+}
+
+async function initLoginPage() {
+  const authed = await checkSession();
+  if (authed) {
+    window.location.href = "/admin/panel";
+    return;
+  }
+
+  loginForm?.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    if (!userInput || !passInput || !loginStatus) return;
+
+    loginStatus.textContent = "";
+    try {
+      const res = await api("/api/admin/login", {
+        method: "POST",
+        body: JSON.stringify({
+          userId: userInput.value.trim(),
+          password: passInput.value.trim()
+        })
+      });
+
+      if (!res.ok) {
+        loginStatus.textContent = "Invalid credentials.";
+        return;
+      }
+
+      window.location.href = "/admin/panel";
+    } catch {
+      loginStatus.textContent = "Login failed. Try again.";
+    }
+  });
+}
+
 async function initDashboardPage() {
+  const authed = await checkSession();
+  if (!authed) {
+    window.location.href = "/admin";
+    return;
+  }
+
   if (
     !adminSearchInput ||
     !adminProductSelect ||
@@ -260,14 +312,8 @@ async function initDashboardPage() {
     return;
   }
 
-  adminSearchInput.addEventListener("input", () => {
-    renderSearchSuggestions();
-  });
-
-  adminSearchInput.addEventListener("change", () => {
-    applySearchSelection();
-  });
-
+  adminSearchInput.addEventListener("input", renderSearchSuggestions);
+  adminSearchInput.addEventListener("change", applySearchSelection);
   adminSearchInput.addEventListener("keydown", (event) => {
     if (event.key === "Enter") {
       event.preventDefault();
@@ -310,8 +356,12 @@ async function initDashboardPage() {
 
   resetAdminChangesBtn.addEventListener("click", resetCurrent);
 
-  adminLogoutBtn?.addEventListener("click", () => {
-    window.location.href = "/";
+  adminLogoutBtn?.addEventListener("click", async () => {
+    try {
+      await api("/api/admin/logout", { method: "POST" });
+    } finally {
+      window.location.href = "/admin";
+    }
   });
 
   try {
@@ -322,4 +372,14 @@ async function initDashboardPage() {
   }
 }
 
-initDashboardPage();
+async function init() {
+  if (isLoginPage) {
+    await initLoginPage();
+    return;
+  }
+  if (isPanelPage) {
+    await initDashboardPage();
+  }
+}
+
+init();
