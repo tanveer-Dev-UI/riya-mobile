@@ -3,57 +3,29 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Admin Dashboard | Riya Mobile Shop</title>
+  <title>Admin Login | Riya Mobile Shop</title>
   <link rel="stylesheet" href="admin.css" />
 </head>
 <body class="admin-page-body">
   <main class="admin-page">
-    <header class="admin-page-head">
-      <div>
-        <h1>Admin Dashboard</h1>
-        <p>Manage product price, offer text, and stock status.</p>
-      </div>
-      <div class="admin-page-actions">
-        <a href="index.html">View Store</a>
-        <button type="button" id="adminLogoutBtn">Logout</button>
-      </div>
-    </header>
-
-    <section class="admin-card">
-      <label class="admin-field">
-        <span>Search Product</span>
-        <input type="search" id="adminSearchInput" placeholder="Type product name..." />
-      </label>
-
-      <label class="admin-field">
-        <span>Select Product</span>
-        <select id="adminProductSelect"></select>
-      </label>
-
-      <label class="admin-field">
-        <span>Price</span>
-        <input type="text" id="adminPriceInput" placeholder="Rs 00,000" />
-      </label>
-
-      <label class="admin-field">
-        <span>Offer Text</span>
-        <input type="text" id="adminOfferInput" placeholder="Eg: 10% Off + Free Cover" />
-      </label>
-
-      <label class="admin-check">
-        <input type="checkbox" id="adminUnavailableInput" />
-        <span>Mark as Unavailable</span>
-      </label>
-
-      <div class="admin-actions">
-        <button type="button" id="saveAdminChanges">Save</button>
-        <button type="button" id="resetAdminChanges">Reset</button>
-      </div>
-
-      <p class="admin-note" id="adminStatusNote"></p>
+    <section class="admin-auth-card" id="adminLoginPanel">
+      <h1>Admin Login</h1>
+      <p>Only authorized admins can access product controls.</p>
+      <form id="adminLoginForm" class="admin-auth-form">
+        <label>
+          <span>User ID</span>
+          <input id="adminUserId" type="text" value="admin" autocomplete="username" required />
+        </label>
+        <label>
+          <span>Password</span>
+          <input id="adminPassword" type="password" autocomplete="current-password" required />
+        </label>
+        <button type="submit">Login</button>
+      </form>
+      <p id="adminLoginStatus" class="admin-auth-status"></p>
+      <a href="index.html">Back to Store</a>
     </section>
   </main>
   <script src="admin.js"></script>
 </body>
 </html>
-

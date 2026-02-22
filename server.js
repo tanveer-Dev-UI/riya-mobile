@@ -1,14 +1,14 @@
-const express = require("express");
+﻿const express = require("express");
 const fs = require("fs/promises");
 const path = require("path");
 const crypto = require("crypto");
 
 const app = express();
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 3000;
 const ADMIN_USER = process.env.ADMIN_USER || "admin";
-const ADMIN_PASS = process.env.ADMIN_PASS || "riya@123";
-const LEGACY_ADMIN_PASS = "riyamobile123";
-const SESSION_TTL_MS = 1000 * 60 * 60 * 8; // 8 hours
+const ADMIN_PASS = process.env.ADMIN_PASS || "RiyaAdmin@2026";
+const LEGACY_ADMIN_PASS = "";
+const SESSION_TTL_MS = 1000 * 60 * 60 * 8;
 const PRODUCT_PATH = path.join(__dirname, "data", "products.json");
 
 const sessions = new Map();
@@ -23,14 +23,22 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });
 
+// Direct admin panel route as requested.
 app.get("/admin", (req, res) => {
-  if (isAuthenticated(req)) return res.redirect("/admin.html");
-  res.sendFile(path.join(__dirname, "admin-login.html"));
+  res.sendFile(path.join(__dirname, "admin-panel.html"));
+});
+
+app.get("/admin/panel", (req, res) => {
+  res.redirect("/admin");
+});
+
+// Optional login page still available if needed later.
+app.get("/admin/login", (req, res) => {
+  res.sendFile(path.join(__dirname, "admin.html"));
 });
 
 app.get("/admin.html", (req, res) => {
-  if (!isAuthenticated(req)) return res.redirect("/admin");
-  res.sendFile(path.join(__dirname, "admin.html"));
+  res.redirect("/admin");
 });
 
 app.get("/admin.hmtl", (req, res) => {
@@ -53,18 +61,21 @@ function parseCookies(req) {
   );
 }
 
-function isAuthenticated(req) {
+function getSessionFromReq(req) {
   const cookies = parseCookies(req);
   const token = cookies.admin_session;
-  if (!token) return false;
+  if (!token) return null;
+
   const session = sessions.get(token);
-  if (!session) return false;
+  if (!session) return null;
+
   if (Date.now() > session.expiresAt) {
     sessions.delete(token);
-    return false;
+    return null;
   }
+
   session.expiresAt = Date.now() + SESSION_TTL_MS;
-  return true;
+  return { token, session };
 }
 
 function createSession(res, userId) {
@@ -80,24 +91,6 @@ function clearSession(req, res) {
   const cookies = parseCookies(req);
   if (cookies.admin_session) sessions.delete(cookies.admin_session);
   res.append("Set-Cookie", "admin_session=; HttpOnly; SameSite=Strict; Path=/; Max-Age=0");
-}
-
-function authMiddleware(req, res, next) {
-  const cookies = parseCookies(req);
-  const token = cookies.admin_session;
-  if (!token) return res.status(401).json({ error: "Unauthorized" });
-
-  const session = sessions.get(token);
-  if (!session) return res.status(401).json({ error: "Unauthorized" });
-
-  if (Date.now() > session.expiresAt) {
-    sessions.delete(token);
-    return res.status(401).json({ error: "Session expired" });
-  }
-
-  session.expiresAt = Date.now() + SESSION_TTL_MS;
-  req.adminUser = session.userId;
-  next();
 }
 
 function flattenProducts(grouped) {
@@ -147,15 +140,12 @@ app.post("/api/admin/logout", (req, res) => {
 });
 
 app.get("/api/admin/session", (req, res) => {
-  const cookies = parseCookies(req);
-  const token = cookies.admin_session;
-  const session = token ? sessions.get(token) : null;
-  const authenticated = Boolean(session && Date.now() <= session.expiresAt);
-  if (!authenticated && token) sessions.delete(token);
-  res.json({ authenticated });
+  const sessionData = getSessionFromReq(req);
+  res.json({ authenticated: Boolean(sessionData) });
 });
 
-app.get("/api/admin/products", authMiddleware, async (req, res) => {
+// Keep admin product APIs open so /admin works instantly without login.
+app.get("/api/admin/products", async (req, res) => {
   try {
     const grouped = await readProducts();
     res.json({ products: flattenProducts(grouped) });
@@ -164,7 +154,7 @@ app.get("/api/admin/products", authMiddleware, async (req, res) => {
   }
 });
 
-app.patch("/api/admin/products/:id", authMiddleware, async (req, res) => {
+app.patch("/api/admin/products/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const [category, indexPart] = id.split("-");

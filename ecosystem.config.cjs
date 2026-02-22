@@ -1,12 +1,12 @@
-module.exports = {
+﻿module.exports = {
   apps: [
     {
       name: "riya-mobile-shop",
       script: "server.js",
       env: {
-        PORT: "4000",
+        PORT: "3000",
         ADMIN_USER: "admin",
-        ADMIN_PASS: "riya@123"
+        ADMIN_PASS: "RiyaAdmin@2026"
       }
     }
   ]
