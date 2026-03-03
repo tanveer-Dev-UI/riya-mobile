@@ -20,26 +20,29 @@
 
       <a href="#" class="logo">
         <span class="logo-mark">RM</span>
-        <span class="logo-text">Riya<span>Mobile</span></span>
+        <span class="logo-text">
+          <span class="brand-line"><b>Riya</b><em>Mobile</em></span>
+          <small>Trusted Since 2014</small>
+        </span>
       </a>
 
-      <form class="search" id="productSearch" role="search" aria-label="Search products">
-        <input type="search" id="globalSearch" placeholder="Search for mobiles, accessories and more" />
-        <button type="submit">Search</button>
-      </form>
-
-      <a class="whatsapp-btn" href="https://wa.me/916306908747?text=Hi%2C%20I%20want%20to%20pre-order%20a%20phone" target="_blank" rel="noopener noreferrer">
-        <span class="wa-short">WhatsApp</span>
-        <span class="wa-full">Pre-Order on WhatsApp</span>
-      </a>
+      <button type="button" class="nav-search-btn" id="navSearchBtn" aria-label="Open search">
+        🔍
+      </button>
     </div>
 
+    <form class="search search-drawer" id="productSearch" role="search" aria-label="Search products">
+      <input type="search" id="globalSearch" placeholder="Search for mobiles, accessories and more" />
+      <button type="submit">Search</button>
+    </form>
+
     <nav class="mobile-menu" id="mobileMenu" aria-hidden="true">
-      <a href="#cat-mobiles">Mobiles</a>
-      <a href="#cat-accessories">Accessories</a>
-      <a href="/admin">Admin</a>
-      <a href="#mobiles-products">New Launch</a>
-      <a href="#deals-products">Offers</a>
+      <p class="mobile-menu-title">Quick Menu</p>
+      <a href="#cat-mobiles"><span class="nav-ico">📱</span>Mobiles</a>
+      <a href="#cat-accessories"><span class="nav-ico">🎧</span>Accessories</a>
+      <a href="/admin"><span class="nav-ico">🛠</span>Admin Panel</a>
+      <a href="#mobiles-products"><span class="nav-ico">🆕</span>New Launch</a>
+      <a href="#deals-products"><span class="nav-ico">🏷</span>Offers</a>
     </nav>
 
     <nav class="category-nav" aria-label="Popular categories">
@@ -177,6 +180,10 @@
     </section>
 
     <section class="product-tools" aria-label="Product filters">
+      <div class="product-tools-head">
+        <h3>Popular Products</h3>
+        <button type="button" class="sort-toggle" aria-label="Sort products">Sort by</button>
+      </div>
       <div class="filter-pills" id="filterPills">
         <button type="button" class="pill active" data-filter="all">All Products</button>
         <button type="button" class="pill" data-filter="deals">Best Deals</button>
@@ -185,7 +192,6 @@
         <button type="button" class="pill" data-filter="accessories">Accessories</button>
       </div>
       <div class="company-categories" aria-label="Company categories">
-        <p class="company-categories-title">Company Categories</p>
         <div class="company-pills" id="companyPills">
           <button type="button" class="company-card active" data-brand="all">
             <span class="company-name-lg">All Companies</span>
@@ -197,28 +203,15 @@
           <span>Brand</span>
           <select id="brandFilter">
             <option value="all">All Brands</option>
+            <option value="Apple">Apple</option>
             <option value="Samsung">Samsung</option>
             <option value="OnePlus">OnePlus</option>
-            <option value="Apple">Apple</option>
             <option value="Xiaomi">Xiaomi</option>
             <option value="Vivo">Vivo</option>
             <option value="Oppo">Oppo</option>
             <option value="Motorola">Motorola</option>
-            <option value="Nothing">Nothing</option>
-            <option value="Google">Google</option>
             <option value="Realme">Realme</option>
-            <option value="iQOO">iQOO</option>
-            <option value="ASUS">ASUS</option>
-            <option value="boAt">boAt</option>
-            <option value="Sony">Sony</option>
-            <option value="JBL">JBL</option>
-            <option value="Noise">Noise</option>
-            <option value="Fire-Boltt">Fire-Boltt</option>
-            <option value="Anker">Anker</option>
-            <option value="Spigen">Spigen</option>
-            <option value="Portronics">Portronics</option>
-            <option value="SanDisk">SanDisk</option>
-            <option value="Baseus">Baseus</option>
+            <option value="Google">Google</option>
           </select>
         </label>
         <label>
@@ -244,6 +237,14 @@
         <button type="button" id="clearFilters" class="clear-btn">Reset</button>
       </div>
       <p class="filter-note" id="filterNote">Showing all products</p>
+    </section>
+
+    <section class="apple-listing" id="appleListingSection" aria-label="Apple iPhone listing">
+      <div class="section-head">
+        <h3>Apple iPhone Lineup</h3>
+        <a href="#mobiles-products">View All Mobiles</a>
+      </div>
+      <div class="apple-list-body" id="appleListBody"></div>
     </section>
 
     <section class="product-showcase" id="deals-products" data-category="deals" aria-label="Best deals products">
@@ -986,6 +987,13 @@
       </div>
     </section>
   </main>
+
+  <nav class="mobile-bottom-nav" aria-label="Quick navigation">
+    <a href="#" class="active"><span>⌂</span>Home</a>
+    <a href="#mobiles-products"><span>♡</span>Likes</a>
+    <a href="#deals-products"><span>🛒</span>Cart</a>
+    <a href="#cat-accessories"><span>👤</span>Profile</a>
+  </nav>
 
   <script src="products-catalog.js"></script>
   <script src="script.js"></script>
