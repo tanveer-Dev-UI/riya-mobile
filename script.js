@@ -1,4 +1,4 @@
-﻿const menuBtn = document.getElementById("menuBtn");
+﻿﻿const menuBtn = document.getElementById("menuBtn");
 const mobileMenu = document.getElementById("mobileMenu");
 const navSearchBtn = document.getElementById("navSearchBtn");
 const globalSearchInput = document.getElementById("globalSearch");
@@ -31,18 +31,14 @@ function updateMenuOverlapState() {
 }
 
 function scheduleStickySync() {
-  syncProductStickyTop();
-  syncMenuAnchorTop();
-  updateMenuOverlapState();
-  window.setTimeout(syncProductStickyTop, 120);
-  window.setTimeout(syncMenuAnchorTop, 120);
-  window.setTimeout(updateMenuOverlapState, 120);
-  window.setTimeout(syncProductStickyTop, 260);
-  window.setTimeout(syncMenuAnchorTop, 260);
-  window.setTimeout(updateMenuOverlapState, 260);
-  window.setTimeout(syncProductStickyTop, 420);
-  window.setTimeout(syncMenuAnchorTop, 420);
-  window.setTimeout(updateMenuOverlapState, 420);
+  // Using a single timeout is more efficient than multiple staggered ones.
+  // It waits for the next event loop tick, allowing the DOM to update
+  // before we read its dimensions for syncing sticky positions.
+  setTimeout(() => {
+    syncProductStickyTop();
+    syncMenuAnchorTop();
+    updateMenuOverlapState();
+  }, 0);
 }
 
 function updateMobileLogoState() {
@@ -117,19 +113,6 @@ document.addEventListener("click", (event) => {
   }
 });
 
-document.addEventListener("keydown", (event) => {
-  if (event.key === "Escape") {
-    closeSearchDrawer();
-  }
-});
-
-window.addEventListener("scroll", updateMobileLogoState, { passive: true });
-window.addEventListener("scroll", updateMenuOverlapState, { passive: true });
-window.addEventListener("resize", updateMobileLogoState);
-window.addEventListener("resize", scheduleStickySync);
-updateMobileLogoState();
-scheduleStickySync();
-
 searchDrawer?.addEventListener("transitionend", scheduleStickySync);
 mobileMenu?.addEventListener("transitionend", scheduleStickySync);
 
@@ -149,6 +132,12 @@ if (typeof ResizeObserver !== "undefined" && productToolsSection) {
   });
   toolsResizeObserver.observe(productToolsSection);
 }
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") {
+    closeSearchDrawer();
+  }
+});
 
 if (menuBtn && mobileMenu) {
   menuBtn.addEventListener("click", () => {
@@ -240,30 +229,44 @@ if (slidesTrack && dotsWrap && prevBtn && nextBtn) {
 const phoneRevealSection = document.getElementById("phoneReveal");
 const cinemaStage = phoneRevealSection?.querySelector(".cinema-stage");
 
-if (phoneRevealSection && cinemaStage) {
-  let ticking = false;
+function updateRevealProgress() {
+  if (!phoneRevealSection || !cinemaStage) return;
+  const rect = phoneRevealSection.getBoundingClientRect();
+  const vh = window.innerHeight || document.documentElement.clientHeight;
+  const start = vh * 0.9;
+  const end = vh * 0.15;
+  const raw = (start - rect.top) / (start - end);
+  const progress = Math.max(0, Math.min(1, raw));
+  cinemaStage.style.setProperty("--reveal-progress", progress.toFixed(3));
+}
 
-  function updateRevealProgress() {
-    const rect = phoneRevealSection.getBoundingClientRect();
-    const vh = window.innerHeight || document.documentElement.clientHeight;
-    const start = vh * 0.9;
-    const end = vh * 0.15;
-    const raw = (start - rect.top) / (start - end);
-    const progress = Math.max(0, Math.min(1, raw));
-    cinemaStage.style.setProperty("--reveal-progress", progress.toFixed(3));
-    ticking = false;
-  }
+// --- Unified Event Handlers for Performance ---
+let isScrollTicking = false;
 
-  function onRevealScroll() {
-    if (ticking) return;
-    ticking = true;
-    window.requestAnimationFrame(updateRevealProgress);
-  }
+function onScroll() {
+  if (isScrollTicking) return;
+  isScrollTicking = true;
+  window.requestAnimationFrame(() => {
+    updateMobileLogoState();
+    updateMenuOverlapState();
+    updateRevealProgress();
+    isScrollTicking = false;
+  });
+}
 
-  window.addEventListener("scroll", onRevealScroll, { passive: true });
-  window.addEventListener("resize", onRevealScroll);
+function onResize() {
+  updateMobileLogoState();
+  scheduleStickySync();
   updateRevealProgress();
 }
+
+window.addEventListener("scroll", onScroll, { passive: true });
+window.addEventListener("resize", onResize);
+
+// Initial calls
+updateMobileLogoState();
+scheduleStickySync();
+updateRevealProgress();
 
 let productData = window.PRODUCT_CATALOG || {};
 
@@ -716,6 +719,3 @@ if (filterPills && searchInput && mainProductGrid) {
   refreshCardMetadata();
   applyFilters();
 }
-
-
-
